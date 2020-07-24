@@ -21,6 +21,11 @@ namespace SuperBot5000.Modules
                 if (du.Roles.Contains(role))
                 {
                     UserList.GetUserList().TryGetUserByName(name, out user);
+                    if (user == null)
+                    {
+                        await ReplyAsync("That user does not exist yet... a user will be created automatically when they interact with me.");
+                        return;
+                    }
                 }
                 else
                 {
