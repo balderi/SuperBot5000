@@ -35,28 +35,33 @@ namespace SuperBot5000.Games
 
             long winnings = -bet;
 
+            string foot;
+
             if (val1 == val2 && val2 == val3)
             {
                 winnings += (bet * 100) + bet;
                 user.AddCoins(winnings);
-                retval.WithFooter($"A winner is you! (+{winnings:N0} coins)\nYour balance is {user.GetBalance()}");
+                foot = $"A winner is you! (+{winnings:N0} coins)";
             }
             else if(val1 == 7) //diamond in first slot
             {
                 winnings += (bet * 10) + bet;
                 user.AddCoins(winnings);
-                retval.WithFooter($"{StaticResources.GetSlotsEmoji(7)} in first slot! (+{winnings:N0} coins)\nYour balance is {user.GetBalance()}");
+                foot = $"{StaticResources.GetSlotsEmoji(7)} in first slot! (+{winnings:N0} coins)";
             }
             else if (val1 == val2 || val1 == val3 || val2 == val3)
             {
                 winnings += (bet * 5) + bet;
                 user.AddCoins(winnings);
-                retval.WithFooter($"Two of a kind! (+{winnings:N0} coins)\nYour balance is {user.GetBalance()}");
+                foot = $"Two of a kind! (+{winnings:N0} coins)";
             }
             else
             {
-                retval.WithFooter($"Better luck next time! ({winnings:N0} coins)\nYour balance is {user.GetBalance()}");
+                foot = $"Better luck next time! ({winnings:N0} coins)";
             }
+
+            retval.WithFooter($"{foot}\nYour balance is {user.GetBalance()} coins");
+
             return retval.Build();
         }
 
@@ -113,7 +118,7 @@ namespace SuperBot5000.Games
 
             retval.WithDescription(sb.ToString());
 
-            retval.WithFooter($"Total result of multislots: {winnings:N0} coins\nYour balance is {user.GetBalance()}");
+            retval.WithFooter($"Total result of multislots: {winnings:N0} coins\nYour balance is {user.GetBalance()} coins");
 
             return retval.Build();
         }
