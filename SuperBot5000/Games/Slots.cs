@@ -8,7 +8,7 @@ namespace SuperBot5000.Games
 {
     public class Slots
     {
-        public static Embed Play(SocketCommandContext context, int bet)
+        public static Embed Play(SocketCommandContext context, long bet)
         {
             var retval = new EmbedBuilder()
             {
@@ -33,7 +33,7 @@ namespace SuperBot5000.Games
 
             retval.WithDescription($"{StaticResources.GetSlotsEmoji(val1)} | {StaticResources.GetSlotsEmoji(val2)} | {StaticResources.GetSlotsEmoji(val3)}");
 
-            int winnings = -bet;
+            long winnings = -bet;
 
             if (val1 == val2 && val2 == val3)
             {
@@ -60,9 +60,9 @@ namespace SuperBot5000.Games
             return retval.Build();
         }
 
-        public static Embed PlayMulti(SocketCommandContext context, int times, int bet)
+        public static Embed PlayMulti(SocketCommandContext context, int times, long bet)
         {
-            int multiBet = times * bet;
+            var multiBet = times * bet;
 
             var retval = new EmbedBuilder()
             {
@@ -77,7 +77,7 @@ namespace SuperBot5000.Games
                 return retval.Build();
             }
 
-            int winnings = 0;
+            long winnings = 0;
 
             user.LastPlayed = DateTime.Now;
 
