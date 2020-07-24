@@ -27,7 +27,7 @@ namespace SuperBot5000
 
             await Log(new LogMessage(LogSeverity.Info, "Main", $"Currently contains {Users.UserList.GetUserList().GetNumberOfUsers()} users."));
 
-            Environment.SetEnvironmentVariable("DiscordToken", "MzQzMTg2MTc4NTk1NjE4ODE3.XVQu1g.faAnPXFlnhrLMsaepWpX9A3rd_0");
+            Environment.SetEnvironmentVariable("DiscordToken", "token");
             _client = new DiscordSocketClient();
 
             _client.Log += Log;
