@@ -15,12 +15,12 @@ namespace SuperBot5000.Modules
             => ReplyAsync(echo);
 
         [Command("ping")]
-        [Summary("Sends the respnse time in milliseconds")]
+        [Summary("Sends the response time in milliseconds")]
         public Task PingAsync() =>
             ReplyAsync($"Pong! ({DateTime.Now.Subtract(Context.Message.CreatedAt.LocalDateTime).TotalMilliseconds:F2} ms)");
 
         [Command("timer")]
-        [Summary("Sets a timer for the desired time")]
+        [Summary("Sets a timer for the desired time interval")]
         public async Task TaskAsync(string arg)
         {
             var num = Regex.Match(arg, "\\d+").Value;
