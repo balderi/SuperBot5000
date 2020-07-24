@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Users>
+    <User>
+      <Name>&lt;@!252800904384872449&gt;</Name>
+      <Balance>540</Balance>
+      <LastPlayed>2020-07-22T23:40:46.4506442+02:00</LastPlayed>
+    </User>
+    <User>
+      <Name>&lt;@!244952038406881280&gt;</Name>
+      <Balance>380</Balance>
+      <LastPlayed>2020-07-22T23:40:20.586798+02:00</LastPlayed>
+    </User>
+    <User>
+      <Name>&lt;@!227527777421623296&gt;</Name>
+      <Balance>100</Balance>
+      <LastPlayed>0001-01-01T00:00:00</LastPlayed>
+    </User>
+  </Users>
+</UserList>
