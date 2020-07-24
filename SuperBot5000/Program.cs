@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Discord.Commands;
 using System.Globalization;
+using System.IO;
 
 namespace SuperBot5000
 {
@@ -27,7 +28,7 @@ namespace SuperBot5000
 
             await Log(new LogMessage(LogSeverity.Info, "Main", $"Currently contains {Users.UserList.GetUserList().GetNumberOfUsers()} users."));
 
-            Environment.SetEnvironmentVariable("DiscordToken", "token");
+            Environment.SetEnvironmentVariable("DiscordToken", File.ReadAllText("../../token.txt"));
             _client = new DiscordSocketClient();
 
             _client.Log += Log;
