@@ -7,7 +7,7 @@ namespace SuperBot5000.Users
     {
         public string Name { get; set; }
         public string HumanName { get; set; }
-        public int Balance { get; set; }
+        public long Balance { get; set; }
         public DateTime LastPlayed { get; set; }
         public DateTime LastGotCoins { get; set; }
 
@@ -24,7 +24,7 @@ namespace SuperBot5000.Users
             LastPlayed = DateTime.MinValue;
         }
 
-        public void AddCoins(int value)
+        public void AddCoins(long value)
         {
             if(value < 0)
             {
@@ -32,13 +32,13 @@ namespace SuperBot5000.Users
                 return;
             }
             if (Balance + value < Balance)
-                Balance = int.MaxValue;
+                Balance = long.MaxValue;
             else
                 Balance += value;
             UserList.GetUserList().SaveList();
         }
 
-        public void SubtractCoins(int value)
+        public void SubtractCoins(long value)
         {
             if (value < 0)
             {
