@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using System.Linq;
+using Discord.Commands;
 
 namespace SuperBot5000.Users
 {
@@ -26,19 +27,33 @@ namespace SuperBot5000.Users
             return _userList;
         }
 
-        public User GetUser(string name)
+        public User GetUser(SocketCommandContext context)
         {
             try
             {
-                return Users.First(x => x.Name == name);
+                return Users.First(x => x.Name == context.User.Mention);
             }
             catch { }
 
-            User user = new User(name);
+            User user = new User(context);
             Users.Add(user);
             SaveList();
-            Console.WriteLine($"Created user {name}.");
+            Console.WriteLine($"Created user {context.User.Mention}.");
             return user;
+        }
+
+        public bool TryGetUserByName(string name, out User user)
+        {
+            try
+            {
+                user = Users.First(x => x.Name == name);
+                return true;
+            }
+            catch
+            {
+                user = null;
+                return false;
+            }
         }
 
         public int GetNumberOfUsers()

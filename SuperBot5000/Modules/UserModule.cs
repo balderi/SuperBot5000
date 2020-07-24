@@ -19,7 +19,9 @@ namespace SuperBot5000.Modules
             if (!string.IsNullOrWhiteSpace(name))
             {
                 if (du.Roles.Contains(role))
-                    user = UserList.GetUserList().GetUser(name);
+                {
+                    UserList.GetUserList().TryGetUserByName(name, out user);
+                }
                 else
                 {
                     await ReplyAsync($"I'm sorry, {Context.User.Mention}; I'm afraid I can't let you do that.");
@@ -28,7 +30,7 @@ namespace SuperBot5000.Modules
             }
             else
             {
-                user = UserList.GetUserList().GetUser(Context.User.Mention);
+                user = UserList.GetUserList().GetUser(Context);
             }
             
             await ReplyAsync(
@@ -43,7 +45,7 @@ namespace SuperBot5000.Modules
         [Summary("Get user's coin balance.")]
         public async Task BalanceAsync()
         {
-            User user = UserList.GetUserList().GetUser(Context.User.Mention);
+            User user = UserList.GetUserList().GetUser(Context);
             await ReplyAsync($"{user.Name}'s balance is {user.GetBalance()} coins.");
         }
 
@@ -51,7 +53,7 @@ namespace SuperBot5000.Modules
         [Summary("Recieve daily coins.")]
         public async Task DailyAsync()
         {
-            User user = UserList.GetUserList().GetUser(Context.User.Mention);
+            User user = UserList.GetUserList().GetUser(Context);
             if(!user.CanGetCoins())
             {
                 await ReplyAsync($"No can do, {user.Name}...");

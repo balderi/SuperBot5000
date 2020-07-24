@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Discord.Commands;
+using System;
 
 namespace SuperBot5000.Users
 {
     public class User
     {
         public string Name { get; set; }
+        public string HumanName { get; set; }
         public int Balance { get; set; }
         public DateTime LastPlayed { get; set; }
         public DateTime LastGotCoins { get; set; }
@@ -14,9 +16,10 @@ namespace SuperBot5000.Users
             //nothing to do here...
         }
 
-        public User(string name)
+        public User(SocketCommandContext context)
         {
-            Name = name;
+            Name = context.User.Mention;
+            HumanName = context.User.Username;
             Balance = 100;
             LastPlayed = DateTime.MinValue;
         }
