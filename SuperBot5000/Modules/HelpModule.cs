@@ -28,7 +28,7 @@ namespace SuperBot5000.Modules
 
             foreach(CommandInfo c in commands)
             {
-                sb.AppendLine($"`{c.Name}` - {c.Summary}");
+                sb.AppendLine($" • `{c.Name}` - {c.Summary}");
             }
 
             retval.AddField("Commands", sb.ToString());

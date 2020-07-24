@@ -133,10 +133,10 @@ namespace SuperBot5000.Games
             };
 
             retval.AddField("Rules", 
-                $"- You bet coins to play - default is 10, use `slots <bet>` to bet a different amount, e.g. `slots 50`\n" +
-                $"- Three of a kind pays bet x 100\n" +
-                $"- Two of a kind pays bet x 5\n" +
-                $"- A `{StaticResources.GetSlotsEmoji(7)}` in the first slot pays bet x 10\n\n" +
+                $" • You bet coins to play - default is 10, use `slots <bet>` to bet a different amount, e.g. `slots 50`\n" +
+                $" • Three of a kind pays bet x 100\n" +
+                $" • Two of a kind pays bet x 5\n" +
+                $" • A `{StaticResources.GetSlotsEmoji(7)}` in the first slot pays bet x 10\n\n" +
                 $"Only the highest paying prize is paid out. Winning will refund your bet on top of your winnings.");
             retval.AddField("Examples",
                 $"With a bet of 10 coins\n\n" +

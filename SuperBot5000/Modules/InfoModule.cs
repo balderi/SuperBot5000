@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace SuperBot5000.Modules
 {
@@ -18,6 +19,19 @@ namespace SuperBot5000.Modules
         [Summary("Sends the response time in milliseconds")]
         public Task PingAsync() =>
             ReplyAsync($"Pong! ({DateTime.Now.Subtract(Context.Message.CreatedAt.LocalDateTime).TotalMilliseconds:F2} ms)");
+
+        [Command("leg")]
+        [Summary("Talk about legs...")]
+        public Task LegAsync()
+        {
+            Context.Channel.TriggerTypingAsync();
+            ReplyAsync("leg so hot");
+            Thread.Sleep(1000);
+            ReplyAsync("hot hot leg");
+            Thread.Sleep(1000);
+            ReplyAsync("leg so hot u fry an egg...");
+            return Task.CompletedTask;
+        }
 
         [Command("timer")]
         [Summary("Sets a timer for the desired time interval")]
@@ -49,7 +63,7 @@ namespace SuperBot5000.Modules
 
             double interval = Convert.ToDouble(num) * mult;
 
-            Timer timer = new Timer(interval);
+            System.Timers.Timer timer = new System.Timers.Timer(interval);
             timer.Elapsed += Timer_Tick;
 
             await ReplyAsync($"Alright, I've set a timer for {num} {respType}!");
@@ -59,7 +73,7 @@ namespace SuperBot5000.Modules
         private void Timer_Tick(object sender, EventArgs e)
         {
             Context.Channel.SendMessageAsync($"{Context.User.Mention} your time's up!");
-            (sender as Timer).Stop();
+            (sender as System.Timers.Timer).Stop();
         }
     }
 }
