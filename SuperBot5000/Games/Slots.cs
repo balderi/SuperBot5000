@@ -39,23 +39,23 @@ namespace SuperBot5000.Games
             {
                 winnings += (bet * 100) + bet;
                 user.AddCoins(winnings);
-                retval.WithFooter($"A winner is you! (+{winnings:N0} coins)");
+                retval.WithFooter($"A winner is you! (+{winnings:N0} coins)\nYour balance is {user.GetBalance()}");
             }
             else if(val1 == 7) //diamond in first slot
             {
                 winnings += (bet * 10) + bet;
                 user.AddCoins(winnings);
-                retval.WithFooter($"{StaticResources.GetSlotsEmoji(7)} in first slot! (+{winnings:N0} coins)");
+                retval.WithFooter($"{StaticResources.GetSlotsEmoji(7)} in first slot! (+{winnings:N0} coins)\nYour balance is {user.GetBalance()}");
             }
             else if (val1 == val2 || val1 == val3 || val2 == val3)
             {
                 winnings += (bet * 5) + bet;
                 user.AddCoins(winnings);
-                retval.WithFooter($"Two of a kind! (+{winnings:N0} coins)");
+                retval.WithFooter($"Two of a kind! (+{winnings:N0} coins)\nYour balance is {user.GetBalance()}");
             }
             else
             {
-                retval.WithFooter($"Better luck next time! ({winnings:N0} coins)");
+                retval.WithFooter($"Better luck next time! ({winnings:N0} coins)\nYour balance is {user.GetBalance()}");
             }
             return retval.Build();
         }
@@ -113,7 +113,7 @@ namespace SuperBot5000.Games
 
             retval.WithDescription(sb.ToString());
 
-            retval.WithFooter($"Total result of multislots: {winnings:N0} coins");
+            retval.WithFooter($"Total result of multislots: {winnings:N0} coins\nYour balance is {user.GetBalance()}");
 
             return retval.Build();
         }

@@ -18,7 +18,7 @@ namespace SuperBot5000.Modules
                 return;
             }
 
-            if(int.TryParse(arg, out int bet))
+            if(long.TryParse(arg, out long bet))
             {
                 await ReplyAsync(message: Context.User.Mention, embed: Slots.Play(Context, bet));
                 return;
@@ -29,7 +29,7 @@ namespace SuperBot5000.Modules
 
         [Command("multislots")]
         [Summary("Play multislots - use `multislots <times> <bet>` to play, e.g. `multislots 10 50` to play 10 games with a bet of 50 coins each")]
-        public async Task MultislotsAsync(int times = 3, int bet = 10)
+        public async Task MultislotsAsync(int times = 3, long bet = 10)
         {
             if(times > 10)
             {
