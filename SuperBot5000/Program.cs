@@ -86,6 +86,10 @@ namespace SuperBot5000
                 {
                     Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", e.Message));
                 }
+                finally
+                {
+                    Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", "Connection method over"));
+                }
             }
             return Task.CompletedTask;
         }
