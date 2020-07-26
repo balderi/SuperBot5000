@@ -24,16 +24,30 @@ namespace SuperBot5000.Modules
                 return;
             }
 
-            await ReplyAsync("Unknown argument - type '!slots help' to get help (it seems like you need it...)");
+            await ReplyAsync("Unknown argument - type `!slots help` to get help (it seems like you need it...)");
         }
 
         [Command("multislots")]
         [Summary("Play multislots - use `slots help` to get help")]
-        public async Task MultislotsAsync(int times = 3, long bet = 10)
+        public async Task MultislotsAsync(string arg = "3", long bet = 10)
         {
-            if(times > 10)
+            if(arg == "help")
             {
-                await ReplyAsync("Multislots has a limt of 10 games at once.");
+                await ReplyAsync(embed: Slots.Help());
+                return;
+            }
+
+            int times = 3;
+
+            if(!int.TryParse(arg, out times))
+            {
+                await ReplyAsync("Unknown argument - type `!multislots help` to get help (it seems like you need it...)");
+                return;
+            }
+
+            if (times > 10)
+            {
+                await ReplyAsync("Multislots has a limit of 10 games at once.");
                 return;
             }
             try
