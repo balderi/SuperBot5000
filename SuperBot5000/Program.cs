@@ -79,13 +79,19 @@ namespace SuperBot5000
                 try
                 {
                     var c = _client.GetChannel(id) as IMessageChannel;
-                    Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", c.Name));
+                    var n = c.Name;
+                    Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", n));
                     c.SendMessageAsync(m);
                 }
                 catch(Exception e)
                 {
                     Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", e.Message));
                 }
+                finally
+                {
+                    Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", "Connection method over"));
+                }
+                Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", "Connection method over over"));
             }
             return Task.CompletedTask;
         }
