@@ -32,7 +32,6 @@ namespace SuperBot5000.Modules
             }
             switch (type)
             {
-                default:
                 case "give":
                     user.AddCoins(value);
                     await ReplyAsync($"Gave {Context.User.Mention} {value} coins!");
@@ -49,8 +48,11 @@ namespace SuperBot5000.Modules
                     }
                     break;
                 case "set":
-                    user.Balance = value;
+                    user.SetBalance(value);
                     await ReplyAsync($"Set {Context.User.Mention}'s balance to {value} coins!");
+                    break;
+                default:
+                    await ReplyAsync($"usage: `!coins [give|take|set] <@user> <value>`");
                     break;
             }
         }

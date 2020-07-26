@@ -57,6 +57,12 @@ namespace SuperBot5000.Users
             return Balance.ToString("N0");
         }
 
+        public void SetBalance(long value)
+        {
+            Balance = value;
+            UserList.GetUserList().SaveList();
+        }
+
         public TimeSpan GetLastPlayed()
         {
             return DateTime.Now.Subtract(LastPlayed);
