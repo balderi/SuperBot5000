@@ -42,7 +42,7 @@ namespace SuperBot5000.Modules
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "git",
-                    Arguments = "show -s --format='%h%n%an <%ae>%n%ad%n%s'",
+                    Arguments = "show -s --format='%h%n%aN <%ae>%n%ad%n%s'",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true
