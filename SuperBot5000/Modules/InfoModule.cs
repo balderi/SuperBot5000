@@ -26,10 +26,10 @@ namespace SuperBot5000.Modules
         public async Task EmojiAsync()
         {
             var sb = new StringBuilder("Emoji:\n");
-            var emoji = Context.Guild.Emotes.Select(x => x.Name).ToList();
+            var emoji = Context.Guild.Emotes.Select(x => Context.Guild.GetRole(x.RoleIds[0])).ToList();
             foreach(var e in emoji)
             {
-                sb.AppendLine(e);
+                sb.AppendLine(e.Name);
             }
             await ReplyAsync(sb.ToString());
         }
