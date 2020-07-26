@@ -29,7 +29,7 @@ namespace SuperBot5000.Modules
             var emoji = Context.Guild.Emotes;
             foreach(var e in emoji)
             {
-                sb.AppendLine($"<:{e.Name}:{e.Id}>");
+                sb.AppendLine($"<:{e.Name}:{e.Id}>  - {e.RoleIds.Count}");
             }
             await ReplyAsync(sb.ToString());
         }

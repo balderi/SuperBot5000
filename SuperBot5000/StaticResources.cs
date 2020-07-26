@@ -43,11 +43,9 @@ namespace SuperBot5000
             return du.Roles.Contains(role);
         }
 
-        public static List<IRole> GetRole(SocketCommandContext context, string[] roleNames)
+        public static IEnumerable<SocketRole> GetRole(SocketCommandContext context, string[] roleNames)
         {
-            var retval = context.Guild.Roles.Where(x => roleNames.Contains(x.Name)) as List<IRole>;
-            //context.Channel.SendMessageAsync($"Found {retval.Count} roles.");
-            return retval;
+            return context.Guild.Roles.Select(x => x).Where(y => roleNames.Contains(y.Name));
         }
 
         public static string GitFormat(string message)

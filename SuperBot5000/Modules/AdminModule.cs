@@ -2,7 +2,6 @@
 using Discord.Commands;
 using SuperBot5000.Users;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -26,8 +25,17 @@ namespace SuperBot5000.Modules
                 return;
             }
 
-            if(!(Context.Guild.Emotes.Select(x => x.Name == "dickbutt").Count() > 0))
-                await Context.Guild.CreateEmoteAsync("dickbutt", new Image("emoji/dickbutt.png"), StaticResources.GetRole(Context, new string[] { "Bot", "dickbuttemoji" }));
+            foreach(var f in Directory.GetFiles("emoji"))
+            {
+                var file = Path.GetFileNameWithoutExtension(f);
+                if (StaticResources.GetRole(Context, new string[] { $"{file}emoji" }).Count() < 1)
+                    await Context.Guild.CreateRoleAsync($"{file}emoji");
+                if (!(Context.Guild.Emotes.Select(x => x.Name == file).Count() > 0))
+                    await Context.Guild.CreateEmoteAsync(file, new Image(f),
+                    new Optional<IEnumerable<IRole>>(StaticResources.GetRole(Context, new string[] { "Bot", $"{file}emoji" })));
+            }
+
+            await ReplyAsync("Refreshed emoji!");
         }
 
         [Command("wtf")]
@@ -41,6 +49,25 @@ namespace SuperBot5000.Modules
             }
 
             await ReplyAsync("wat?");
+        }
+
+        [Command("roles")]
+        [Summary("($A) list roles and ids")]
+        public async Task RolesAsync()
+        {
+            if (!StaticResources.ValidateAdminUser(Context))
+            {
+                await ReplyAsync($"I'm sorry, {Context.User.Mention}; I'm afraid I can't let you do that.");
+                return;
+            }
+
+            var sb = new StringBuilder("Roles:\n");
+            foreach(var r in Context.Guild.Roles)
+            {
+                sb.AppendLine($"{r.Name} - {r.Id}");
+            }
+
+            await ReplyAsync(sb.ToString());
         }
 
         [Command("latest")]
