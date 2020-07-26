@@ -70,8 +70,6 @@ namespace SuperBot5000.Modules
                 return;
             }
 
-            File.Create("pulling");
-
             await ReplyAsync("Pulling the latest commit...");
             Process.Start("../../../../../../buildnrun.sh");
         }
