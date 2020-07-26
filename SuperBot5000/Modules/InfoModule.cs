@@ -26,7 +26,7 @@ namespace SuperBot5000.Modules
         public async Task EmojiAsync()
         {
             var sb = new StringBuilder("Emoji:");
-            var emoji = Context.Guild.Emotes.Where(x => x.CreatorId == Context.Client.CurrentUser.Id).Select(x => x.ToString()).ToList();
+            var emoji = Context.Guild.Emotes.Where(x => x.CreatorId == Context.Client.CurrentUser.Id).Select(x => x.Name).ToList();
             foreach(var e in emoji)
             {
                 sb.AppendLine(e);

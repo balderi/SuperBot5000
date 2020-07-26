@@ -26,7 +26,8 @@ namespace SuperBot5000.Modules
                 return;
             }
 
-            await Context.Guild.CreateEmoteAsync("dickbutt", new Image("emoji/dickbutt.png"), StaticResources.GetRole(Context, new string[] { "Bot", "dickbuttemoji" }));
+            if(!(Context.Guild.Emotes.Select(x => x.Name == "dickbutt").Count() > 0))
+                await Context.Guild.CreateEmoteAsync("dickbutt", new Image("emoji/dickbutt.png"), StaticResources.GetRole(Context, new string[] { "Bot", "dickbuttemoji" }));
         }
 
         [Command("wtf")]
