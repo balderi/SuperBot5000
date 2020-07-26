@@ -46,6 +46,18 @@ namespace SuperBot5000
                 Environment.GetEnvironmentVariable("DiscordToken"));
             await _client.StartAsync();
 
+            if(File.Exists("pullmyfile"))
+            {
+                try
+                {
+                    File.Delete("pullmyfile");
+                }
+                catch
+                {
+                    File.Create("stupidfile");
+                }
+            }
+
             // Block this task until the program is closed.
             await Task.Delay(-1);
         }
