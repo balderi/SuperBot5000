@@ -77,19 +77,19 @@ namespace SuperBot5000.Users
             }
             else if (ts.Days > 0)
             {
-                return ts.Days == 1 ? $"about a day" : $"about {ts.Days} days ago";
+                return ts.Days == 1 ? $"about a day ago" : $"about {ts.Days} days ago";
             }
             else if (ts.Hours > 0)
             {
-                return ts.Hours == 1 ? $"about an hour" : $"about {ts.Hours} hours ago";
+                return ts.Hours == 1 ? $"about an hour ago" : $"about {ts.Hours} hours ago";
             }
             else if (ts.Minutes > 0)
             {
-                return ts.Minutes == 1 ? $"about a minute" : $"about {ts.Minutes} minutes ago";
+                return ts.Minutes == 1 ? $"about a minute ago" : $"about {ts.Minutes} minutes ago";
             }
             else if (ts.Seconds > 0)
             {
-                return ts.Seconds == 1 ? $"about a second" : $"about {ts.Seconds} seconds ago";
+                return ts.Seconds == 1 ? $"about a second ago" : $"about {ts.Seconds} seconds ago";
             }
             else
             {
