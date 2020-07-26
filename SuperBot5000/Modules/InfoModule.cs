@@ -21,18 +21,6 @@ namespace SuperBot5000.Modules
         public Task PingAsync() =>
             ReplyAsync($"Pong! ({DateTime.Now.Subtract(Context.Message.CreatedAt.LocalDateTime).TotalMilliseconds:F2} ms)");
 
-        [Command("emoji")]
-        [Summary("List custom emoji")]
-        public async Task EmojiAsync()
-        {
-            var sb = new StringBuilder("Emoji:\n");
-            var emoji = Context.Guild.Emotes;
-            foreach(var e in emoji)
-            {
-                sb.AppendLine($"<:{e.Name}:{e.Id}>  - {e.RoleIds.Count}");
-            }
-            await ReplyAsync(sb.ToString());
-        }
 
         [Command("leg")]
         [Summary("Talk about legs...")]

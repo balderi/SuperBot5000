@@ -70,7 +70,7 @@ namespace SuperBot5000
 
             // Execute the command with the command context we just
             // created, along with the service provider for precondition checks.
-
+            var typing = context.Channel.EnterTypingState();
             // Keep in mind that result does not indicate a return value
             // rather an object stating if the command executed successfully.
             var result = await _commands.ExecuteAsync(
@@ -84,6 +84,7 @@ namespace SuperBot5000
             // command.
             if (!result.IsSuccess)
             await context.Channel.SendMessageAsync(result.ErrorReason);
+            typing.Dispose();
         }
     }
 }
