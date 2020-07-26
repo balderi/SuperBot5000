@@ -28,7 +28,7 @@ namespace SuperBot5000.Modules
         }
 
         [Command("multislots")]
-        [Summary("Play multislots - use `multislots <times> <bet>` to play, e.g. `multislots 10 50` to play 10 games with a bet of 50 coins each")]
+        [Summary("Play multislots - use `slots help` to get help")]
         public async Task MultislotsAsync(int times = 3, long bet = 10)
         {
             if(times > 10)

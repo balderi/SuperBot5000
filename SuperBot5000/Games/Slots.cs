@@ -127,13 +127,13 @@ namespace SuperBot5000.Games
             int val2 = StaticResources.GetRandomSlotsValue();
             int val3 = StaticResources.GetRandomSlotsValue();
 
-            if(val1 == 7 && rnd.Next(0, 2) > 0)
+            if(val1 == 7 && rnd.Next(0, 3) > 0)
                 val1 = (val1 + StaticResources.GetRandomSlotsValue()) % StaticResources.GetTotalSlots();
 
-            if (val1 == val2 && rnd.Next(0, 2) > 0)
+            if (val1 == val2 && rnd.Next(0, 3) > 0)
                 val2 = (val2 + StaticResources.GetRandomSlotsValue()) % StaticResources.GetTotalSlots();
 
-            if (val2 == val3 && rnd.Next(0, 2) > 0)
+            if (val2 == val3 && rnd.Next(0, 3) > 0)
                 val3 = (val3 + StaticResources.GetRandomSlotsValue()) % StaticResources.GetTotalSlots();
 
             return new Tuple<int, int, int>(val1, val2, val3);
@@ -164,6 +164,9 @@ namespace SuperBot5000.Games
                 $"Pays 100 coins (`{StaticResources.GetSlotsEmoji(7)}` in the first slot - the two `{StaticResources.GetSlotsEmoji(12)}` are ignored, as two of a kind pays less)\n\n" +
                 $"`{StaticResources.GetSlotsEmoji(0)} | {StaticResources.GetSlotsEmoji(7)} | {StaticResources.GetSlotsEmoji(2)}`\n" +
                 $"Pays nothing (you lose... good day, sir!)");
+            retval.AddField("Multislots",
+                $"Use `multislots <times> <bet>` to play, e.g. `multislots 10 50` to play 10 games with a bet of 50 coins each.\n" +
+                $"Default is `multislot 3 10.`");
             return retval.Build();
         }
     }
