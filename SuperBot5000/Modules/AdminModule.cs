@@ -72,7 +72,9 @@ namespace SuperBot5000.Modules
 
             try
             {
-                File.Create("pullmyfile");
+                var sw = File.CreateText("pullmyfile");
+                sw.WriteLine(Context.Channel.Id);
+                sw.Close();
             }
             catch(Exception e)
             {

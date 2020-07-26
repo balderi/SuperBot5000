@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Discord.Commands;
 using System.Globalization;
 using System.IO;
+using Discord.Rest;
 
 namespace SuperBot5000
 {
@@ -50,7 +51,10 @@ namespace SuperBot5000
             {
                 try
                 {
+                    ulong id = Convert.ToUInt64(File.ReadAllText("pullmyfile"));
                     File.Delete("pullmyfile");
+                    var c = _client.GetChannel(id) as IMessageChannel;
+                    await c.SendMessageAsync("I have pulled!");
                 }
                 catch
                 {
