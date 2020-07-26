@@ -55,6 +55,8 @@ namespace SuperBot5000
 
         private Task Connected()
         {
+            Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", $"State: {_client.ConnectionState}"));
+
             if (File.Exists("pullmyfile"))
             {
                 Log(new LogMessage(LogSeverity.Debug, "FileIO", "File exists"));
@@ -74,8 +76,16 @@ namespace SuperBot5000
                     Log(new LogMessage(LogSeverity.Debug, "FileIO", $"stupidfile created: {e.Message}"));
                 }
 
-                var c = _client.GetChannel(id) as IMessageChannel;
-                c.SendMessageAsync(m);
+                try
+                {
+                    var c = _client.GetChannel(id) as IMessageChannel;
+                    Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", c.Name));
+                    c.SendMessageAsync(m);
+                }
+                catch(Exception e)
+                {
+                    Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", e.Message));
+                }
             }
             return Task.CompletedTask;
         }
