@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Linq;
+using System.Text;
 
 namespace SuperBot5000.Modules
 {
     public class InfoModule : ModuleBase<SocketCommandContext>
-    {
-        // ~say hello world -> hello world
+    { 
         [Command("say")]
         [Summary("Echoes a message.")]
         public Task SayAsync([Remainder] [Summary("The text to echo")] string echo)
@@ -19,6 +20,19 @@ namespace SuperBot5000.Modules
         [Summary("Sends the response time in milliseconds")]
         public Task PingAsync() =>
             ReplyAsync($"Pong! ({DateTime.Now.Subtract(Context.Message.CreatedAt.LocalDateTime).TotalMilliseconds:F2} ms)");
+
+        [Command("emoji")]
+        [Summary("List custom emoji")]
+        public async Task EmojiAsync()
+        {
+            var sb = new StringBuilder("Emoji:");
+            var emoji = Context.Guild.Emotes.Where(x => x.CreatorId == Context.Client.CurrentUser.Id).Select(x => x.ToString()).ToList();
+            foreach(var e in emoji)
+            {
+                sb.AppendLine(e);
+            }
+            await ReplyAsync(sb.ToString());
+        }
 
         [Command("leg")]
         [Summary("Talk about legs...")]

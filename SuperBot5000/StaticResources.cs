@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Schema;
 
 namespace SuperBot5000
 {
@@ -40,6 +41,11 @@ namespace SuperBot5000
             var du = context.User as SocketGuildUser;
             var role = (du as IGuildUser).Guild.Roles.FirstOrDefault(x => x.Name == "Admin");
             return du.Roles.Contains(role);
+        }
+
+        public static List<IRole> GetRole(SocketCommandContext context, string[] roleNames)
+        {
+            return context.Guild.Roles.Where(x => roleNames.Contains(x.Name)) as List<IRole>;
         }
 
         public static string GitFormat(string message)

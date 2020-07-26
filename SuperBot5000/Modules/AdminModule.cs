@@ -16,6 +16,19 @@ namespace SuperBot5000.Modules
     {
         public CommandService Commands { get; set; }
 
+        [Command("emojirefresh")]
+        [Summary("($A) Refreshes the list of emoji")]
+        public async Task EmojiRefreshAsync()
+        {
+            if (!StaticResources.ValidateAdminUser(Context))
+            {
+                await ReplyAsync($"I'm sorry, {Context.User.Mention}; I'm afraid I can't let you do that.");
+                return;
+            }
+
+            await Context.Guild.CreateEmoteAsync("dickbutt", new Image("emoji/dickbutt.png"), StaticResources.GetRole(Context, new string[] { "Bot", "dickbuttemoji" }));
+        }
+
         [Command("wtf")]
         [Summary("($A) test command; please ignore")]
         public async Task WtfAsync()

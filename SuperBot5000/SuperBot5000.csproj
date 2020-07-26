@@ -10,6 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="emoji\dickbutt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="memes\1.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
