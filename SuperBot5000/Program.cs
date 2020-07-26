@@ -78,6 +78,7 @@ namespace SuperBot5000
 
                 try
                 {
+                    Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", "Before building channel"));
                     var c = _client.GetChannel(id) as IMessageChannel;
                     var n = c.Name;
                     Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", n));

@@ -101,17 +101,18 @@ namespace SuperBot5000.Modules
                 await ReplyAsync("That user does not exist.");
                 return;
             }
+
             switch (type)
             {
                 case "give":
                     user.AddCoins(value);
-                    await ReplyAsync($"Gave {Context.User.Mention} {value} coins!");
+                    await ReplyAsync($"Gave {user.Name} {value} coins!");
                     break;
                 case "take":
                     try
                     {
                         user.SubtractCoins(value);
-                        await ReplyAsync($"Took {value} coins from {Context.User.Mention}!");
+                        await ReplyAsync($"Took {value} coins from {user.Name}!");
                     }
                     catch(ArithmeticException e)
                     {
@@ -120,7 +121,7 @@ namespace SuperBot5000.Modules
                     break;
                 case "set":
                     user.SetBalance(value);
-                    await ReplyAsync($"Set {Context.User.Mention}'s balance to {value} coins!");
+                    await ReplyAsync($"Set {user.Name}'s balance to {value} coins!");
                     break;
                 default:
                     await ReplyAsync($"usage: `!coins [give|take|set] <@user> <value>`");
