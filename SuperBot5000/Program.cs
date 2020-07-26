@@ -47,30 +47,37 @@ namespace SuperBot5000
                 Environment.GetEnvironmentVariable("DiscordToken"));
             await _client.StartAsync();
 
-            if(File.Exists("pullmyfile"))
+            _client.Connected += Connected;
+
+            // Block this task until the program is closed.
+            await Task.Delay(-1);
+        }
+
+        private Task Connected()
+        {
+            if (File.Exists("pullmyfile"))
             {
-                await Log(new LogMessage(LogSeverity.Debug, "FileIO", "File exists"));
+                Log(new LogMessage(LogSeverity.Debug, "FileIO", "File exists"));
                 string m;
                 ulong id = Convert.ToUInt64(File.ReadAllText("pullmyfile"));
-                await Log(new LogMessage(LogSeverity.Debug, "FileIO", $"ID: {id}"));
+                Log(new LogMessage(LogSeverity.Debug, "FileIO", $"ID: {id}"));
                 try
                 {
                     File.Delete("pullmyfile");
                     m = "I have pulled!";
-                    await Log(new LogMessage(LogSeverity.Debug, "FileIO", "pullmyfile deleted"));
+                    Log(new LogMessage(LogSeverity.Debug, "FileIO", "pullmyfile deleted"));
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     File.Create("stupidfile");
                     m = e.Message;
-                    await Log(new LogMessage(LogSeverity.Debug, "FileIO", $"stupidfile created: {e.Message}"));
+                    Log(new LogMessage(LogSeverity.Debug, "FileIO", $"stupidfile created: {e.Message}"));
                 }
-                var c = _client.GetChannel(id) as IMessageChannel;
-                await c.SendMessageAsync(m);
-            }
 
-            // Block this task until the program is closed.
-            await Task.Delay(-1);
+                var c = _client.GetChannel(id) as IMessageChannel;
+                c.SendMessageAsync(m);
+            }
+            return Task.CompletedTask;
         }
 
         private Task Log(LogMessage msg)
