@@ -8,6 +8,8 @@ namespace SuperBot5000.Games
 {
     public class Slots
     {
+        static Random rnd = new Random(DateTime.Now.Millisecond);
+
         public static Embed Play(SocketCommandContext context, long bet)
         {
             var retval = new EmbedBuilder()
@@ -27,29 +29,27 @@ namespace SuperBot5000.Games
 
             user.LastPlayed = DateTime.Now;
 
-            var val1 = StaticResources.GetRandomSlotsValue();
-            var val2 = StaticResources.GetRandomSlotsValue();
-            var val3 = StaticResources.GetRandomSlotsValue();
+            var vals = GetProperSlots();
 
-            retval.WithDescription($"{StaticResources.GetSlotsEmoji(val1)} | {StaticResources.GetSlotsEmoji(val2)} | {StaticResources.GetSlotsEmoji(val3)}");
+            retval.WithDescription($"{StaticResources.GetSlotsEmoji(vals.Item1)} | {StaticResources.GetSlotsEmoji(vals.Item2)} | {StaticResources.GetSlotsEmoji(vals.Item3)}");
 
             long winnings = -bet;
 
             string foot;
 
-            if (val1 == val2 && val2 == val3)
+            if (vals.Item1 == vals.Item2 && vals.Item2 == vals.Item3)
             {
                 winnings += (bet * 100) + bet;
                 user.AddCoins(winnings);
                 foot = $"A winner is you! (+{winnings:N0} coins)";
             }
-            else if(val1 == 7) //diamond in first slot
+            else if(vals.Item1 == 7) //diamond in first slot
             {
                 winnings += (bet * 10) + bet;
                 user.AddCoins(winnings);
                 foot = $"{StaticResources.GetSlotsEmoji(7)} in first slot! (+{winnings:N0} coins)";
             }
-            else if (val1 == val2 || val1 == val3 || val2 == val3)
+            else if (vals.Item1 == vals.Item2 || vals.Item1 == vals.Item3 || vals.Item2 == vals.Item3)
             {
                 winnings += (bet * 5) + bet;
                 user.AddCoins(winnings);
@@ -90,28 +90,26 @@ namespace SuperBot5000.Games
 
             for (int i = 0; i < times; i++)
             {
-                var val1 = StaticResources.GetRandomSlotsValue();
-                var val2 = StaticResources.GetRandomSlotsValue();
-                var val3 = StaticResources.GetRandomSlotsValue();
+                var vals = GetProperSlots();
 
                 var roundResult = -bet;
 
-                if (val1 == val2 && val2 == val3)
+                if (vals.Item1 == vals.Item2 && vals.Item2 == vals.Item3)
                 {
                     roundResult += (bet * 100) + bet;
                 }
-                else if (val1 == 7) //diamond in first slot
+                else if (vals.Item1 == 7) //diamond in first slot
                 {
                     roundResult += (bet * 10) + bet;
                 }
-                else if (val1 == val2 || val1 == val3 || val2 == val3)
+                else if (vals.Item1 == vals.Item2 || vals.Item1 == vals.Item3 || vals.Item2 == vals.Item3)
                 {
                     roundResult += (bet * 5) + bet;
                 }
 
                 winnings += roundResult;
 
-                sb.AppendLine($"{StaticResources.GetSlotsEmoji(val1)} | {StaticResources.GetSlotsEmoji(val2)} | {StaticResources.GetSlotsEmoji(val3)} ឵឵ ឵឵ ឵឵ ឵឵({roundResult:N0})");
+                sb.AppendLine($"{StaticResources.GetSlotsEmoji(vals.Item1)} | {StaticResources.GetSlotsEmoji(vals.Item2)} | {StaticResources.GetSlotsEmoji(vals.Item3)} ឵឵ ឵឵ ឵឵ ឵឵({roundResult:N0})");
             }
 
             user.AddCoins(winnings);
@@ -121,6 +119,24 @@ namespace SuperBot5000.Games
             retval.WithFooter($"Total result of multislots: {winnings:N0} coins\nYour balance is {user.GetBalance()} coins");
 
             return retval.Build();
+        }
+
+        public static Tuple<int, int, int> GetProperSlots()
+        {
+            int val1 = StaticResources.GetRandomSlotsValue();
+            int val2 = StaticResources.GetRandomSlotsValue();
+            int val3 = StaticResources.GetRandomSlotsValue();
+
+            if(val1 == 7 && rnd.Next(0, 2) > 0)
+                val1 = (val1 + StaticResources.GetRandomSlotsValue()) % StaticResources.GetTotalSlots();
+
+            if (val1 == val2 && rnd.Next(0, 2) > 0)
+                val2 = (val2 + StaticResources.GetRandomSlotsValue()) % StaticResources.GetTotalSlots();
+
+            if (val2 == val3 && rnd.Next(0, 2) > 0)
+                val3 = (val3 + StaticResources.GetRandomSlotsValue()) % StaticResources.GetTotalSlots();
+
+            return new Tuple<int, int, int>(val1, val2, val3);
         }
 
         public static Embed Help()

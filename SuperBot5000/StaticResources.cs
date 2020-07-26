@@ -31,6 +31,8 @@ namespace SuperBot5000
 
         public static int GetRandomSlotsValue() => rnd.Next(0, slotsEmoji.Length);
 
+        public static int GetTotalSlots() => slotsEmoji.Length - 1;
+
         public static string GetSlotsEmoji(int id) => id >= 0 && id < slotsEmoji.Length ? slotsEmoji[id] : "Error!";
 
         public static bool ValidateAdminUser(SocketCommandContext context)
