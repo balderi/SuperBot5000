@@ -49,17 +49,21 @@ namespace SuperBot5000
 
             if(File.Exists("pullmyfile"))
             {
+                await Log(new LogMessage(LogSeverity.Debug, "FileIO", "File exists"));
                 string m;
                 ulong id = Convert.ToUInt64(File.ReadAllText("pullmyfile"));
+                await Log(new LogMessage(LogSeverity.Debug, "FileIO", $"ID: {id}"));
                 try
                 {
                     File.Delete("pullmyfile");
                     m = "I have pulled!";
+                    await Log(new LogMessage(LogSeverity.Debug, "FileIO", "pullmyfile deleted"));
                 }
                 catch(Exception e)
                 {
                     File.Create("stupidfile");
                     m = e.Message;
+                    await Log(new LogMessage(LogSeverity.Debug, "FileIO", $"stupidfile created: {e.Message}"));
                 }
                 var c = _client.GetChannel(id) as IMessageChannel;
                 await c.SendMessageAsync(m);
