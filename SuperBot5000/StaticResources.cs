@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Discord;
+using Discord.Commands;
+using Discord.WebSocket;
+using SuperBot5000.Users;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,5 +31,12 @@ namespace SuperBot5000
         public static int GetRandomSlotsValue() => rnd.Next(0, slotsEmoji.Length);
 
         public static string GetSlotsEmoji(int id) => id >= 0 && id < slotsEmoji.Length ? slotsEmoji[id] : "Error!";
+
+        public static bool ValidateAdminUser(SocketCommandContext context)
+        {
+            var du = context.User as SocketGuildUser;
+            var role = (du as IGuildUser).Guild.Roles.FirstOrDefault(x => x.Name == "Admin");
+            return du.Roles.Contains(role);
+        }
     }
 }

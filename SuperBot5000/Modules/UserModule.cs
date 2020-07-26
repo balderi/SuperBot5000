@@ -65,7 +65,7 @@ namespace SuperBot5000.Modules
             }
             else
             {
-                user.GetCoins();
+                user.GetDailyCoins();
                 await ReplyAsync($"You got 100 coins!");
             }
         }

@@ -33,13 +33,14 @@ namespace SuperBot5000.Users
             {
                 return Users.First(x => x.Name == context.User.Mention);
             }
-            catch { }
-
-            User user = new User(context);
-            Users.Add(user);
-            SaveList();
-            Console.WriteLine($"Created user {context.User.Mention}.");
-            return user;
+            catch
+            {
+                User user = new User(context);
+                Users.Add(user);
+                SaveList();
+                Console.WriteLine($"Created user {context.User.Mention}.");
+                return user;
+            }
         }
 
         public bool TryGetUserByName(string name, out User user)

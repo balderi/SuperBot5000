@@ -96,7 +96,7 @@ namespace SuperBot5000.Users
             return DateTime.Now.Subtract(LastGotCoins).TotalDays > 1;
         }
 
-        public void GetCoins()
+        public void GetDailyCoins()
         {
             LastGotCoins = DateTime.Now;
             AddCoins(100);
