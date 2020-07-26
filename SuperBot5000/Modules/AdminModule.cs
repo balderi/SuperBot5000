@@ -121,7 +121,7 @@ namespace SuperBot5000.Modules
                     break;
                 case "set":
                     user.SetBalance(value);
-                    await ReplyAsync($"Set {user.Name}'s balance to {value} coins!");
+                    await ReplyAsync($"Set {Context.User.Mention}'s balance to {value} coins!");
                     break;
                 default:
                     await ReplyAsync($"usage: `!coins [give|take|set] <@user> <value>`");
