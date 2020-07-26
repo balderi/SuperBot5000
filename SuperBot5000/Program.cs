@@ -49,17 +49,20 @@ namespace SuperBot5000
 
             if(File.Exists("pullmyfile"))
             {
+                string m;
+                ulong id = Convert.ToUInt64(File.ReadAllText("pullmyfile"));
                 try
                 {
-                    ulong id = Convert.ToUInt64(File.ReadAllText("pullmyfile"));
                     File.Delete("pullmyfile");
-                    var c = _client.GetChannel(id) as IMessageChannel;
-                    await c.SendMessageAsync("I have pulled!");
+                    m = "I have pulled!";
                 }
-                catch
+                catch(Exception e)
                 {
                     File.Create("stupidfile");
+                    m = e.Message;
                 }
+                var c = _client.GetChannel(id) as IMessageChannel;
+                await c.SendMessageAsync(m);
             }
 
             // Block this task until the program is closed.
