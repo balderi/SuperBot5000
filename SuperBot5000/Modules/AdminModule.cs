@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,7 +43,7 @@ namespace SuperBot5000.Modules
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "git",
-                    Arguments = "log -1 --format='%h%n%aN%x20%x3c%ae%x3e%n%ad%n%s'",
+                    Arguments = "log -1 --format=%h%n%aN%x20%x3c%ae%x3e%n%ad%n%s",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true
@@ -68,6 +69,8 @@ namespace SuperBot5000.Modules
                 await ReplyAsync($"I'm sorry, {Context.User.Mention}; I'm afraid I can't let you do that.");
                 return;
             }
+
+            File.Create("pulling");
 
             await ReplyAsync("Pulling the latest commit...");
             Process.Start("../../../../../../buildnrun.sh");

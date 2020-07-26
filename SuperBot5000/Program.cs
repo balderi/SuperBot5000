@@ -51,6 +51,14 @@ namespace SuperBot5000
             await _client.LoginAsync(TokenType.Bot,
                 Environment.GetEnvironmentVariable("DiscordToken"));
             await _client.StartAsync();
+
+
+            if (File.Exists("pulling"))
+            {
+                File.Delete("pulling");
+                await _client.CurrentUser.SendMessageAsync("I have pulled!");
+            }
+
             // Block this task until the program is closed.
             await Task.Delay(-1);
         }
