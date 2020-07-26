@@ -29,7 +29,7 @@ namespace SuperBot5000.Modules
             {
                 var file = Path.GetFileNameWithoutExtension(f);
                 if (StaticResources.GetRole(Context, new string[] { $"{file}emoji" }).Count() < 1)
-                    await Context.Guild.CreateRoleAsync($"{file}emoji");
+                    await Context.Guild.CreateRoleAsync($"{file}emoji", isMentionable: false);
                 if (!(Context.Guild.Emotes.Select(x => x.Name == file).Count() > 0))
                     await Context.Guild.CreateEmoteAsync(file, new Image(f),
                     new Optional<IEnumerable<IRole>>(StaticResources.GetRole(Context, new string[] { "Bot", $"{file}emoji" })));
