@@ -15,10 +15,29 @@ namespace SuperBot5000.Modules
     {
         public CommandService Commands { get; set; }
 
+        [Command("wtf")]
+        [Summary("($A) test command; please ignore")]
+        public async Task WtfAsync()
+        {
+            if (!StaticResources.ValidateAdminUser(Context))
+            {
+                await ReplyAsync($"I'm sorry, {Context.User.Mention}; I'm afraid I can't let you do that.");
+                return;
+            }
+
+            await ReplyAsync("wat?");
+        }
+
         [Command("pull")]
         [Summary("($A) Pull and build the latest commit")]
         public async Task PullAsync()
         {
+            if (!StaticResources.ValidateAdminUser(Context))
+            {
+                await ReplyAsync($"I'm sorry, {Context.User.Mention}; I'm afraid I can't let you do that.");
+                return;
+            }
+
             await ReplyAsync("Pulling the latest commit...");
             Process.Start("../../../../../../buildnrun.sh");
         }
