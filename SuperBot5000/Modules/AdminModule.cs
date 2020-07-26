@@ -45,18 +45,24 @@ namespace SuperBot5000.Modules
                     Arguments = @"log -1 --format='%h%n%aN <%ae>%n%ad%n%s'",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
+                    RedirectStandardError = true,
                     CreateNoWindow = true
                 }
             };
 
             proc.Start();
             string output = "";
+            string error = "";
             while (!proc.StandardOutput.EndOfStream)
             {
                 output += proc.StandardOutput.ReadLine();
             }
+            while (!proc.StandardError.EndOfStream)
+            {
+                error += proc.StandardError.ReadLine();
+            }
 
-            await ReplyAsync(StaticResources.GitFormat(output));
+            await ReplyAsync($"stdout: {StaticResources.GitFormat(output)}\nstderr: {error}");
         }
 
         [Command("pull")]
