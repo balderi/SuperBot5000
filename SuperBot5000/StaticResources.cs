@@ -49,7 +49,7 @@ namespace SuperBot5000
             }
             catch(Exception e)
             {
-                return $"An error occurred: {e.Message}";
+                return $"An error occurred: {e.Message}\nRaw message recieved: {message}";
             }
         }
     }
