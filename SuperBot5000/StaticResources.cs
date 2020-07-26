@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace SuperBot5000
 {
@@ -37,6 +38,19 @@ namespace SuperBot5000
             var du = context.User as SocketGuildUser;
             var role = (du as IGuildUser).Guild.Roles.FirstOrDefault(x => x.Name == "Admin");
             return du.Roles.Contains(role);
+        }
+
+        public static string GitFormat(string message)
+        {
+            var temp = message.Split('\n');
+            try
+            {
+                return $"The commit `{temp[0]}` was submitted by `{temp[1]}` on `{temp[2]}` with the message `{temp[3]}`";
+            }
+            catch(Exception e)
+            {
+                return $"An error occurred: {e.Message}";
+            }
         }
     }
 }

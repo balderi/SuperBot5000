@@ -42,7 +42,7 @@ namespace SuperBot5000.Modules
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "git",
-                    Arguments = "log -1",
+                    Arguments = "show -s --format='%h%n%an <%ae>%n%ad%n%s'",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true
@@ -56,7 +56,7 @@ namespace SuperBot5000.Modules
                 output += proc.StandardOutput.ReadLine();
             }
 
-            await ReplyAsync(output);
+            await ReplyAsync(StaticResources.GitFormat(output));
         }
 
         [Command("pull")]
