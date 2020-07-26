@@ -50,10 +50,10 @@ namespace SuperBot5000.Modules
             };
 
             proc.Start();
-            string output = "Something went wrong...";
+            string output = "";
             while (!proc.StandardOutput.EndOfStream)
             {
-                output = proc.StandardOutput.ReadLine();
+                output += proc.StandardOutput.ReadLine();
             }
 
             await ReplyAsync(output);
