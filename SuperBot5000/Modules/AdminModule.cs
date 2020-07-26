@@ -28,6 +28,37 @@ namespace SuperBot5000.Modules
             await ReplyAsync("wat?");
         }
 
+        [Command("latest")]
+        [Summary("($A) test command; please ignore")]
+        public async Task LatestAsync()
+        {
+            if (!StaticResources.ValidateAdminUser(Context))
+            {
+                await ReplyAsync($"I'm sorry, {Context.User.Mention}; I'm afraid I can't let you do that.");
+                return;
+            }
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "git",
+                    Arguments = "log -1",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
+
+            proc.Start();
+            string output = "Something went wrong...";
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                output = proc.StandardOutput.ReadLine();
+            }
+
+            await ReplyAsync(output);
+        }
+
         [Command("pull")]
         [Summary("($A) Pull and build the latest commit")]
         public async Task PullAsync()
