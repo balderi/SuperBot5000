@@ -4,6 +4,7 @@ using SuperBot5000.Users;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,14 @@ namespace SuperBot5000.Modules
     public class AdminModule : ModuleBase<SocketCommandContext>
     {
         public CommandService Commands { get; set; }
+
+        [Command("pull")]
+        [Summary("($A) Pull and build the latest commit")]
+        public async Task PullAsync()
+        {
+            await ReplyAsync("Pulling the latest commit...");
+            Process.Start("../../../../../../buildnrun.sh");
+        }
 
         [Command("coins")]
         [Summary("($A) Adjust a user's coins balance.")]
