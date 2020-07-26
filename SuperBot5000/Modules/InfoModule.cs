@@ -25,7 +25,7 @@ namespace SuperBot5000.Modules
         [Summary("List custom emoji")]
         public async Task EmojiAsync()
         {
-            var sb = new StringBuilder("Emoji:");
+            var sb = new StringBuilder("Emoji:\n");
             var emoji = Context.Guild.Emotes.Select(x => x.Name).ToList();
             foreach(var e in emoji)
             {
