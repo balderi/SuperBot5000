@@ -127,13 +127,13 @@ namespace SuperBot5000.Games
             int val2 = StaticResources.GetRandomSlotsValue();
             int val3 = StaticResources.GetRandomSlotsValue();
 
-            if(val1 == 7 && rnd.Next(0, 5) == 0)
+            if(val1 == 7 && rnd.Next(0, 3) == 0)
                 val1 = (val1 + StaticResources.GetRandomSlotsValue()) % StaticResources.GetTotalSlots();
 
-            if ((val1 == val2 || val1 == val3) && rnd.Next(0, 5) == 0)
+            if ((val1 == val2 || val1 == val3) && rnd.Next(0, 3) == 0)
                 val2 = (val2 + StaticResources.GetRandomSlotsValue()) % StaticResources.GetTotalSlots();
 
-            if ((val2 == val3 || val1 == val3) && rnd.Next(0, 5) == 0)
+            if ((val2 == val3 || val1 == val3) && rnd.Next(0, 3) == 0)
                 val3 = (val3 + StaticResources.GetRandomSlotsValue()) % StaticResources.GetTotalSlots();
 
             return new Tuple<int, int, int>(val1, val2, val3);
