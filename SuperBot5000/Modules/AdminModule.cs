@@ -70,6 +70,15 @@ namespace SuperBot5000.Modules
                 return;
             }
 
+            try
+            {
+                File.Create("pullmyfile");
+            }
+            catch(Exception e)
+            {
+                await ReplyAsync(e.Message);
+            }
+
             await ReplyAsync("Pulling the latest commit...");
             Process.Start("../../../../../../buildnrun.sh");
         }
