@@ -6,6 +6,8 @@ using Discord.Commands;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using SuperBot5000.Users;
+using System.Collections.Generic;
 
 namespace SuperBot5000
 {
@@ -22,6 +24,9 @@ namespace SuperBot5000
         IServiceProvider _services;
 
         System.Timers.Timer _timer;
+
+        List<User> _users;
+        List<string> _names;
 
         public async Task MainAsync()
         {
@@ -49,6 +54,9 @@ namespace SuperBot5000
                 Environment.GetEnvironmentVariable("DiscordToken"));
             await _client.StartAsync();
 
+            _users = UserList.GetUserList().Users;
+            _names = _users.Select(x => x.Name).ToList();
+
             _timer = new System.Timers.Timer(10000);
             _timer.Elapsed += Timer_Tick;
 
@@ -60,7 +68,12 @@ namespace SuperBot5000
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-
+            var olUsers = _client.GetGuild(252801284439015424).Users.Where(x => _names.Contains(x.Mention)).Select(x => x.Mention).ToList();
+            foreach(User u in _users.Where(x => olUsers.Contains(x.Name)))
+            {
+                u.IncrementOLPoints();
+                u.TryRedeemOLPoints();
+            }
         }
 
         private Task Log(LogMessage msg)

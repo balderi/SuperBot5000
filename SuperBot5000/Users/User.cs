@@ -10,6 +10,7 @@ namespace SuperBot5000.Users
         public long Balance { get; set; }
         public DateTime LastPlayed { get; set; }
         public DateTime LastGotCoins { get; set; }
+        public int OnlinePoints { get; set; }
 
         public User()
         {
@@ -22,6 +23,7 @@ namespace SuperBot5000.Users
             HumanName = context.User.Username;
             Balance = 100;
             LastPlayed = DateTime.MinValue;
+            OnlinePoints = 0;
         }
 
         public void AddCoins(long value)
@@ -106,6 +108,20 @@ namespace SuperBot5000.Users
         {
             LastGotCoins = DateTime.Now;
             AddCoins(100);
+        }
+
+        public void IncrementOLPoints()
+        {
+            OnlinePoints++;
+        }
+
+        public void TryRedeemOLPoints()
+        {
+            if(OnlinePoints >= 100)
+            {
+                OnlinePoints = 0;
+                AddCoins(100);
+            }
         }
     }
 }

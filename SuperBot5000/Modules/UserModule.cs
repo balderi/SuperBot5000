@@ -42,7 +42,8 @@ namespace SuperBot5000.Modules
                 $"User info:\nName: {user.Name}\n" +
                 $"Balance: {user.GetBalance()} coins\n" +
                 $"Last played slots {user.GetFormattedLastPlayed()}\n" +
-                $"Daily coins available: {user.CanGetCoins()}"
+                $"Daily coins available: {user.CanGetCoins()}\n" +
+                $"Activity points: {user.OnlinePoints}"
             );
         }
 
