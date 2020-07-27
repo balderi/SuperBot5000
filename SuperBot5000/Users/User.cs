@@ -30,7 +30,7 @@ namespace SuperBot5000.Users
                 GamblingEarned = 0,
                 GamblingSpent = 0,
                 ActivityEarned = 0,
-                DailiesEarned = 0,
+                DailiesEarned = 100,
                 ShopSpent = 0
             };
         }

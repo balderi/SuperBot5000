@@ -61,7 +61,7 @@ namespace SuperBot5000.Games
             else
             {
                 foot = $"Better luck next time! ({winnings:N0} coins)";
-                user.Bank.GamblingSpent += winnings;
+                user.Bank.GamblingSpent -= winnings;
             }
 
             retval.WithFooter($"{foot}\nYour balance is {user.GetBalance()} coins");
@@ -113,10 +113,10 @@ namespace SuperBot5000.Games
 
                 winnings += roundResult;
 
-                if (winnings > 0) 
-                    user.Bank.GamblingEarned += winnings;
+                if (roundResult > 0) 
+                    user.Bank.GamblingEarned += roundResult;
                 else
-                    user.Bank.GamblingSpent += winnings;
+                    user.Bank.GamblingSpent += Math.Abs(roundResult);
 
                 sb.AppendLine($"{StaticResources.GetSlotsEmoji(vals.Item1)} | {StaticResources.GetSlotsEmoji(vals.Item2)} | {StaticResources.GetSlotsEmoji(vals.Item3)} ឵឵ ឵឵ ឵឵ ឵឵({roundResult:N0})");
             }
