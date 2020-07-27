@@ -130,7 +130,7 @@ namespace SuperBot5000.Games
             if(val1 == 7 && rnd.Next(0, 3) > 0)
                 val1 = (val1 + StaticResources.GetRandomSlotsValue()) % StaticResources.GetTotalSlots();
 
-            if ((val1 == val2 || val2 == val3) && rnd.Next(0, 2) == 0)
+            if ((val1 == val2) && rnd.Next(0, 2) == 0)
                 val2 = (val2 + StaticResources.GetRandomSlotsValue()) % StaticResources.GetTotalSlots();
 
             if ((val2 == val3 || val1 == val3) && rnd.Next(0, 2) == 0)
