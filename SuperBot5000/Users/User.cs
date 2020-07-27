@@ -11,6 +11,7 @@ namespace SuperBot5000.Users
         public DateTime LastPlayed { get; set; }
         public DateTime LastGotCoins { get; set; }
         public int OnlinePoints { get; set; }
+        public Bank Bank { get; set; }
 
         public User()
         {
@@ -24,6 +25,14 @@ namespace SuperBot5000.Users
             Balance = 100;
             LastPlayed = DateTime.MinValue;
             OnlinePoints = 0;
+            Bank = new Bank()
+            {
+                GamblingEarned = 0,
+                GamblingSpent = 0,
+                ActivityEarned = 0,
+                DailiesEarned = 0,
+                ShopSpent = 0
+            };
         }
 
         public void AddCoins(long value)
@@ -108,6 +117,7 @@ namespace SuperBot5000.Users
         {
             LastGotCoins = DateTime.Now;
             AddCoins(100);
+            Bank.DailiesEarned += 100;
         }
 
         public void IncrementOLPoints()
@@ -121,6 +131,7 @@ namespace SuperBot5000.Users
             {
                 OnlinePoints = 0;
                 AddCoins(100);
+                Bank.ActivityEarned += 100;
             }
         }
     }

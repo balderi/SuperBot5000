@@ -39,11 +39,29 @@ namespace SuperBot5000.Modules
             }
             
             await ReplyAsync(
-                $"User info:\nName: {user.Name}\n" +
+                $"User info:\n" +
+                $"Name: {user.Name}\n" +
                 $"Balance: {user.GetBalance()} coins\n" +
                 $"Last played slots {user.GetFormattedLastPlayed()}\n" +
                 $"Daily coins available: {user.CanGetCoins()}\n" +
                 $"Activity points: {user.OnlinePoints}"
+            );
+        }
+
+        [Command("bank")]
+        [Summary("Get user's bank.")]
+        public async Task BankAsync()
+        {
+            User user = UserList.GetUserList().GetUser(Context);
+            await ReplyAsync(
+                $"{user.Name}'s Bank:\n" +
+                $"Spent on slots: {user.Bank.GamblingSpent:N0} coins\n" +
+                $"Won on slots: {user.Bank.GamblingEarned:N0} coins\n" +
+                $"Earned from dailies: {user.Bank.DailiesEarned:N0} coins\n" +
+                $"Erned from activity: {user.Bank.ActivityEarned:N0} coins\n\n" +
+                $"Total income: {user.Bank.GetTotalEarned():N0} coins\n" +
+                $"Total expense: {user.Bank.GetTotalSpent():N0} coins\n" +
+                $"Cashflow: {(user.Bank.GetTotalEarned() - user.Bank.GetTotalSpent()):N0} coins"
             );
         }
 

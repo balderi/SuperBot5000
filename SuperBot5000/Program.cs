@@ -74,6 +74,7 @@ namespace SuperBot5000
                 u.IncrementOLPoints();
                 u.TryRedeemOLPoints();
             }
+            UserList.GetUserList().SaveList();
         }
 
         private Task Log(LogMessage msg)

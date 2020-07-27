@@ -41,23 +41,27 @@ namespace SuperBot5000.Games
             {
                 winnings += (bet * 100) + bet;
                 user.AddCoins(winnings);
+                user.Bank.GamblingEarned += winnings;
                 foot = $"A winner is you! (+{winnings:N0} coins)";
             }
             else if(vals.Item1 == 7) //diamond in first slot
             {
                 winnings += (bet * 10) + bet;
                 user.AddCoins(winnings);
+                user.Bank.GamblingEarned += winnings;
                 foot = $"{StaticResources.GetSlotsEmoji(7)} in first slot! (+{winnings:N0} coins)";
             }
             else if (vals.Item1 == vals.Item2 || vals.Item1 == vals.Item3 || vals.Item2 == vals.Item3)
             {
                 winnings += (bet * 5) + bet;
                 user.AddCoins(winnings);
+                user.Bank.GamblingEarned += winnings;
                 foot = $"Two of a kind! (+{winnings:N0} coins)";
             }
             else
             {
                 foot = $"Better luck next time! ({winnings:N0} coins)";
+                user.Bank.GamblingSpent += winnings;
             }
 
             retval.WithFooter($"{foot}\nYour balance is {user.GetBalance()} coins");
@@ -108,6 +112,11 @@ namespace SuperBot5000.Games
                 }
 
                 winnings += roundResult;
+
+                if (winnings > 0) 
+                    user.Bank.GamblingEarned += winnings;
+                else
+                    user.Bank.GamblingSpent += winnings;
 
                 sb.AppendLine($"{StaticResources.GetSlotsEmoji(vals.Item1)} | {StaticResources.GetSlotsEmoji(vals.Item2)} | {StaticResources.GetSlotsEmoji(vals.Item3)} ឵឵ ឵឵ ឵឵ ឵឵({roundResult:N0})");
             }
