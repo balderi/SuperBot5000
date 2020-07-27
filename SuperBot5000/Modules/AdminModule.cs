@@ -38,6 +38,19 @@ namespace SuperBot5000.Modules
             await ReplyAsync("Refreshed emoji!");
         }
 
+        [Command("guild")]
+        [Summary("($A) get guild name and id")]
+        public async Task GuildAsync()
+        {
+            if (!StaticResources.ValidateAdminUser(Context))
+            {
+                await ReplyAsync($"I'm sorry, {Context.User.Mention}; I'm afraid I can't let you do that.");
+                return;
+            }
+
+            await ReplyAsync($"{Context.Guild.Name} - {Context.Guild.Id}");
+        }
+
         [Command("wtf")]
         [Summary("($A) test command; please ignore")]
         public async Task WtfAsync()

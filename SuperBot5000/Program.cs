@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Discord.Commands;
 using System.Globalization;
 using System.IO;
-using Discord.Rest;
+using System.Linq;
 
 namespace SuperBot5000
 {
@@ -20,6 +20,8 @@ namespace SuperBot5000
         private DiscordSocketClient _client;
 
         IServiceProvider _services;
+
+        System.Timers.Timer _timer;
 
         public async Task MainAsync()
         {
@@ -47,54 +49,18 @@ namespace SuperBot5000
                 Environment.GetEnvironmentVariable("DiscordToken"));
             await _client.StartAsync();
 
-            _client.Connected += Connected;
+            _timer = new System.Timers.Timer(10000);
+            _timer.Elapsed += Timer_Tick;
+
+            _timer.Start();
 
             // Block this task until the program is closed.
             await Task.Delay(-1);
         }
 
-        private Task Connected()
+        private void Timer_Tick(object sender, EventArgs e)
         {
-            Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", $"State: {_client.ConnectionState}"));
 
-            if (File.Exists("pullmyfile"))
-            {
-                Log(new LogMessage(LogSeverity.Debug, "FileIO", "File exists"));
-                string m;
-                ulong id = Convert.ToUInt64(File.ReadAllText("pullmyfile"));
-                Log(new LogMessage(LogSeverity.Debug, "FileIO", $"ID: {id}"));
-                try
-                {
-                    File.Delete("pullmyfile");
-                    m = "I have pulled!";
-                    Log(new LogMessage(LogSeverity.Debug, "FileIO", "pullmyfile deleted"));
-                }
-                catch (Exception e)
-                {
-                    File.Create("stupidfile");
-                    m = e.Message;
-                    Log(new LogMessage(LogSeverity.Debug, "FileIO", $"stupidfile created: {e.Message}"));
-                }
-
-                try
-                {
-                    Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", "Before building channel"));
-                    var c = _client.GetChannel(id) as IMessageChannel;
-                    var n = c.Name;
-                    Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", n));
-                    c.SendMessageAsync(m);
-                }
-                catch(Exception e)
-                {
-                    Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", e.Message));
-                }
-                finally
-                {
-                    Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", "Connection method over"));
-                }
-                Log(new LogMessage(LogSeverity.Debug, "ConnectionTest", "Connection method over over"));
-            }
-            return Task.CompletedTask;
         }
 
         private Task Log(LogMessage msg)
