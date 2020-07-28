@@ -39,7 +39,7 @@ namespace SuperBot5000.Users
                 User u = new User(user);
                 Users.Add(u);
                 SaveList();
-                Console.WriteLine($"Created user {user.Mention}.");
+                Console.WriteLine($"Created user {user.Username}.");
                 return u;
             }
         }

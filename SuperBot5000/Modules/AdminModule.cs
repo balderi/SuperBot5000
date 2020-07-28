@@ -114,6 +114,24 @@ namespace SuperBot5000.Modules
             await ReplyAsync(StaticResources.GitFormat(output.ToString()));
         }
 
+        [Command("users")]
+        [Summary("($A) List all users")]
+        public async Task UsersAsync()
+        {
+            if (!StaticResources.ValidateAdminUser(Context))
+            {
+                await ReplyAsync($"I'm sorry, {Context.User.Mention}; I'm afraid I can't let you do that.");
+                return;
+            }
+
+            var sb = new StringBuilder();
+
+            foreach (User user in UserList.GetUserList().Users)
+            {
+
+            }
+        }
+
         [Command("pull")]
         [Summary("($A) Pull and build the latest commit")]
         public async Task PullAsync()

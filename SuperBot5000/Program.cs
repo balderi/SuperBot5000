@@ -54,11 +54,6 @@ namespace SuperBot5000
                 Environment.GetEnvironmentVariable("DiscordToken"));
             await _client.StartAsync();
 
-            foreach (SocketUser user in _client.GetGuild(252801284439015424).Users)
-            {
-                UserList.GetUserList().GetUser(user);
-            }
-
             _timer = new System.Timers.Timer(10000);
             _timer.Elapsed += Timer_Tick;
 
@@ -70,9 +65,15 @@ namespace SuperBot5000
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            var _guildUsers = _client.GetGuild(252801284439015424).Users;
+            //update users
+            foreach (SocketUser user in _guildUsers)
+            {
+                UserList.GetUserList().GetUser(user);
+            }
             _users = UserList.GetUserList().Users;
             _names = _users.Select(x => x.Name).ToList();
-            var olUsers = _client.GetGuild(252801284439015424).Users.Where(x => _names.Contains(x.Mention)).Select(x => x.Mention).ToList();
+            var olUsers = _guildUsers.Where(x => _names.Contains(x.Mention)).Select(x => x.Mention).ToList();
             foreach(User u in _users.Where(x => olUsers.Contains(x.Name)))
             {
                 u.IncrementOLPoints();
