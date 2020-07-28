@@ -17,7 +17,7 @@ namespace SuperBot5000.Games
             {
                 joke = redditJokes[rnd.Next(0, redditJokes.Count)];
             }
-            while (joke.Score < 100);
+            while (joke.Score < 100 || joke.Body.Length > 100);
             return joke;
         }
     }
