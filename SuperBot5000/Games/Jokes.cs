@@ -12,7 +12,13 @@ namespace SuperBot5000.Games
 
         public static RedditJoke GetJoke()
         {
-            return redditJokes[rnd.Next(0, redditJokes.Count)];
+            var joke = new RedditJoke();
+            do
+            {
+                joke = redditJokes[rnd.Next(0, redditJokes.Count)];
+            }
+            while (joke.Score < 100);
+            return joke;
         }
     }
 
