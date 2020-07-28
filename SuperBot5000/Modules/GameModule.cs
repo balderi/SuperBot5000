@@ -37,9 +37,8 @@ namespace SuperBot5000.Modules
                 return;
             }
 
-            int times = 3;
 
-            if(!int.TryParse(arg, out times))
+            if (!int.TryParse(arg, out int times))
             {
                 await ReplyAsync("Unknown argument - type `!multislots help` to get help (it seems like you need it...)");
                 return;
@@ -67,8 +66,8 @@ namespace SuperBot5000.Modules
             RedditJoke joke = Jokes.GetJoke();
             var retval = new EmbedBuilder()
             {
-                Title = joke.title,
-                Description = joke.body + "\n\n___",
+                Title = joke.Title,
+                Description = joke.Body + "\n\n___",
             };
 
             retval.WithFooter("From https://github.com/taivop/joke-dataset");

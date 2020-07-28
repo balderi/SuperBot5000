@@ -8,7 +8,7 @@ namespace SuperBot5000.Games
 {
     public class Slots
     {
-        static Random rnd = new Random(DateTime.Now.Millisecond);
+        static readonly Random rnd = new Random(DateTime.Now.Millisecond);
 
         public static Embed Play(SocketCommandContext context, long bet)
         {

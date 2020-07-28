@@ -7,8 +7,8 @@ namespace SuperBot5000.Games
 {
     public static class Jokes
     {
-        private static Random rnd = new Random(DateTime.Now.Millisecond);
-        private static List<RedditJoke> redditJokes = JsonConvert.DeserializeObject<List<RedditJoke>>(File.ReadAllText("reddit_jokes.json"));
+        private static readonly Random rnd = new Random(DateTime.Now.Millisecond);
+        private static readonly List<RedditJoke> redditJokes = JsonConvert.DeserializeObject<List<RedditJoke>>(File.ReadAllText("reddit_jokes.json"));
 
         public static RedditJoke GetJoke()
         {
@@ -18,10 +18,10 @@ namespace SuperBot5000.Games
 
     public class RedditJoke
     {
-        public string title { get; set; }
-        public string id { get; set; }
-        public int score { get; set; }
-        public string body { get; set; }
+        public string Title { get; set; }
+        public string Id { get; set; }
+        public int Score { get; set; }
+        public string Body { get; set; }
 
         public RedditJoke()
         {
