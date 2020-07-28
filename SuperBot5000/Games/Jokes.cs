@@ -12,7 +12,9 @@ namespace SuperBot5000.Games
 
         public static RedditJoke GetJoke()
         {
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
             var joke = new RedditJoke();
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
             do
             {
                 joke = redditJokes[rnd.Next(0, redditJokes.Count)];

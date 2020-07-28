@@ -17,7 +17,9 @@ namespace SuperBot5000
         CommandService _commandService;
         CommandHandler _commandHandler;
 
+#pragma warning disable IDE0060 // Remove unused parameter
         public static void Main(string[] args)
+#pragma warning restore IDE0060 // Remove unused parameter
         => new Program().MainAsync().GetAwaiter().GetResult();
 
         private DiscordSocketClient _client;
