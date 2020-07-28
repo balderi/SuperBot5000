@@ -124,12 +124,14 @@ namespace SuperBot5000.Modules
                 return;
             }
 
-            var sb = new StringBuilder();
+            var sb = new StringBuilder("Current users:\n");
 
             foreach (User user in UserList.GetUserList().Users)
             {
-
+                sb.AppendLine($"{user.HumanName}");
             }
+
+            await ReplyAsync(sb.ToString());
         }
 
         [Command("pull")]
