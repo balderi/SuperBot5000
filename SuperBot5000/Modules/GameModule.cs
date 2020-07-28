@@ -67,7 +67,7 @@ namespace SuperBot5000.Modules
             var retval = new EmbedBuilder()
             {
                 Title = joke.Title,
-                Description = joke.Body + "\n\n___",
+                Description = joke.Body + "\n___",
             };
 
             retval.WithFooter("From https://github.com/taivop/joke-dataset");
