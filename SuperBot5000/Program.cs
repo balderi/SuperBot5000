@@ -95,7 +95,7 @@ namespace SuperBot5000
             }
             _users = UserList.GetUserList().Users;
             _names = _users.Select(x => x.Name).ToList();
-            var olUsers = _guildUsers.Where(x => _names.Contains(x.Mention)).Select(x => x.Mention).ToList();
+            var olUsers = _guildUsers.Where(x => x.Status != UserStatus.Offline).Where(x => _names.Contains(x.Mention)).Select(x => x.Mention).ToList();
             foreach(User u in _users.Where(x => olUsers.Contains(x.Name)))
             {
                 u.IncrementOLPoints();
