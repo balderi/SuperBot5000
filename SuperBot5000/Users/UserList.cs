@@ -4,6 +4,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Linq;
 using Discord.Commands;
+using Discord.WebSocket;
 
 namespace SuperBot5000.Users
 {
@@ -27,19 +28,19 @@ namespace SuperBot5000.Users
             return _userList;
         }
 
-        public User GetUser(SocketCommandContext context)
+        public User GetUser(SocketUser user)
         {
             try
             {
-                return Users.First(x => x.Name == context.User.Mention);
+                return Users.First(x => x.Name == user.Mention);
             }
             catch
             {
-                User user = new User(context);
-                Users.Add(user);
+                User u = new User(user);
+                Users.Add(u);
                 SaveList();
-                Console.WriteLine($"Created user {context.User.Mention}.");
-                return user;
+                Console.WriteLine($"Created user {user.Mention}.");
+                return u;
             }
         }
 

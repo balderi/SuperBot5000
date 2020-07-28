@@ -1,4 +1,5 @@
 ﻿using Discord.Commands;
+using Discord.WebSocket;
 using System;
 
 namespace SuperBot5000.Users
@@ -18,10 +19,10 @@ namespace SuperBot5000.Users
             //nothing to do here...
         }
 
-        public User(SocketCommandContext context)
+        public User(SocketUser user)
         {
-            Name = context.User.Mention;
-            HumanName = context.User.Username;
+            Name = user.Mention;
+            HumanName = user.Username;
             Balance = 100;
             LastPlayed = DateTime.MinValue;
             OnlinePoints = 0;

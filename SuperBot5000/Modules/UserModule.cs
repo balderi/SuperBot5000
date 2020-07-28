@@ -35,7 +35,7 @@ namespace SuperBot5000.Modules
             }
             else
             {
-                user = UserList.GetUserList().GetUser(Context);
+                user = UserList.GetUserList().GetUser(Context.User);
             }
             
             await ReplyAsync(
@@ -52,7 +52,7 @@ namespace SuperBot5000.Modules
         [Summary("Get user's bank.")]
         public async Task BankAsync()
         {
-            User user = UserList.GetUserList().GetUser(Context);
+            User user = UserList.GetUserList().GetUser(Context.User);
             await ReplyAsync(
                 $"{user.Name}'s Bank:\n" +
                 $"Spent on slots: {user.Bank.GamblingSpent:N0} coins\n" +
@@ -69,7 +69,7 @@ namespace SuperBot5000.Modules
         [Summary("Get user's coin balance.")]
         public async Task BalanceAsync()
         {
-            User user = UserList.GetUserList().GetUser(Context);
+            User user = UserList.GetUserList().GetUser(Context.User);
             await ReplyAsync($"{user.Name}'s balance is {user.GetBalance()} coins.");
         }
 
@@ -77,7 +77,7 @@ namespace SuperBot5000.Modules
         [Summary("Recieve daily coins.")]
         public async Task DailyAsync()
         {
-            User user = UserList.GetUserList().GetUser(Context);
+            User user = UserList.GetUserList().GetUser(Context.User);
             if(!user.CanGetCoins())
             {
                 await ReplyAsync($"No can do, {user.Name}...");

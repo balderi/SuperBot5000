@@ -17,7 +17,7 @@ namespace SuperBot5000.Games
                 Title = $"SuperSlots5000"
             };
 
-            User user = UserList.GetUserList().GetUser(context);
+            User user = UserList.GetUserList().GetUser(context.User);
 
             if(user.Balance < bet)
             {
@@ -78,7 +78,7 @@ namespace SuperBot5000.Games
                 Title = $"SuperSlots5000 - Multi"
             };
 
-            User user = UserList.GetUserList().GetUser(context);
+            User user = UserList.GetUserList().GetUser(context.User);
 
             if (user.Balance < multiBet)
             {

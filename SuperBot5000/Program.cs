@@ -54,6 +54,11 @@ namespace SuperBot5000
                 Environment.GetEnvironmentVariable("DiscordToken"));
             await _client.StartAsync();
 
+            foreach (SocketUser user in _client.GetGuild(252801284439015424).Users)
+            {
+                UserList.GetUserList().GetUser(user);
+            }
+
             _timer = new System.Timers.Timer(10000);
             _timer.Elapsed += Timer_Tick;
 
