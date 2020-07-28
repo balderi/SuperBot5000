@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using SuperBot5000.Users;
 using System.Collections.Generic;
+using System.Data;
 
 namespace SuperBot5000
 {
@@ -34,7 +35,7 @@ namespace SuperBot5000
 
             CultureInfo.CurrentCulture = CultureInfo.GetCultureInfoByIetfLanguageTag("en-US");
 
-            await Log(new LogMessage(LogSeverity.Info, "Main", $"Currently contains {Users.UserList.GetUserList().GetNumberOfUsers()} users."));
+            await Log(new LogMessage(LogSeverity.Info, "Main", $"Currently contains {UserList.GetUserList().GetNumberOfUsers()} users."));
 
             Environment.SetEnvironmentVariable("DiscordToken", File.ReadAllText("../../token.txt"));
             _client = new DiscordSocketClient();
@@ -50,8 +51,7 @@ namespace SuperBot5000
             _commandHandler = new CommandHandler(_services, _client, _commandService);
             await _commandHandler.InstallCommandsAsync();
 
-            await _client.LoginAsync(TokenType.Bot,
-                Environment.GetEnvironmentVariable("DiscordToken"));
+            await _client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("DiscordToken"));
             await _client.StartAsync();
 
             _timer = new System.Timers.Timer(10000);
@@ -59,8 +59,30 @@ namespace SuperBot5000
 
             _timer.Start();
 
+            _client.Ready += On_Ready;
+
             // Block this task until the program is closed.
             await Task.Delay(-1);
+        }
+
+        private async Task On_Ready()
+        {
+#if DEBUG
+            await _client.SetGameAsync("Maintenance", type: ActivityType.Listening);
+            await _client.SetStatusAsync(UserStatus.DoNotDisturb);
+#else
+            await _client.SetGameAsync("!help", type: ActivityType.Listening);
+#endif
+
+            if (File.Exists("pullmyfile"))
+            {
+                if(ulong.TryParse(File.ReadAllText("pullmyfile"), out ulong chanID))
+                {
+                    var c = _client.GetChannel(chanID) as IMessageChannel;
+                    await c.SendMessageAsync("I have pulled the latest commit!");
+                    File.Delete("pullmyfile");
+                }
+            }
         }
 
         private void Timer_Tick(object sender, EventArgs e)

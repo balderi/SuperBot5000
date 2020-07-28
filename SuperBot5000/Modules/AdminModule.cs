@@ -114,6 +114,21 @@ namespace SuperBot5000.Modules
             await ReplyAsync(StaticResources.GitFormat(output.ToString()));
         }
 
+        [Command("game")]
+        [Summary("($A) Set game")]
+        public async Task GameAsync(string game, int type = 4)
+        {
+            if (!StaticResources.ValidateAdminUser(Context))
+            {
+                await ReplyAsync($"I'm sorry, {Context.User.Mention}; I'm afraid I can't let you do that.");
+                return;
+            }
+
+            if (type > 4)
+                type = 4;
+            await Context.Client.SetActivityAsync(new Game(game, type: (ActivityType)type));
+        }
+
         [Command("users")]
         [Summary("($A) List all users")]
         public async Task UsersAsync()
@@ -155,7 +170,7 @@ namespace SuperBot5000.Modules
                 await ReplyAsync(e.Message);
             }
 
-            await ReplyAsync("Pulling the latest commit...");
+            await ReplyAsync("Alright, stand by!");
             Process.Start("../../../../../../buildnrun.sh");
         }
 
