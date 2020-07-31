@@ -82,7 +82,8 @@ namespace SuperBot5000
             // as it may clog up the request queue should a user spam a
             // command.
             if (!result.IsSuccess)
-            await context.Channel.SendMessageAsync(result.ErrorReason);
+                await context.Channel.SendMessageAsync(result.ErrorReason);
+
             typing.Dispose();
         }
     }

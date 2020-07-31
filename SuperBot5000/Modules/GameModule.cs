@@ -74,5 +74,18 @@ namespace SuperBot5000.Modules
 
             await ReplyAsync(embed: retval.Build());
         }
+
+        [Command("timmy")]
+        [Summary("See what little Timmy is up to")]
+        public async Task TimmyAsync()
+        {
+            TimmyPoem poem = Timmy.GetPoem();
+            var retval = new EmbedBuilder()
+            {
+                Description = $"{poem.Body}\n___[Context]({poem.Link})",
+            };
+
+            await ReplyAsync(embed: retval.Build());
+        }
     }
 }
