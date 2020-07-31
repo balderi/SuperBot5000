@@ -82,7 +82,7 @@ namespace SuperBot5000.Modules
             TimmyPoem poem = Timmy.GetPoem();
             var retval = new EmbedBuilder()
             {
-                Description = $"{poem.Body}\n___[Context]({poem.Link})",
+                Description = $"{poem.Body}\n\n[Context]({poem.Link})",
             };
 
             await ReplyAsync(embed: retval.Build());

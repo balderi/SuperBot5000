@@ -12,9 +12,7 @@ namespace SuperBot5000.Games
 
         public static TimmyPoem GetPoem()
         {
-#pragma warning disable IDE0059 // Unnecessary assignment of a value
             var poem = new TimmyPoem();
-#pragma warning restore IDE0059 // Unnecessary assignment of a value
 
             return timmyPoems[rnd.Next(0, timmyPoems.Count)];
         }
