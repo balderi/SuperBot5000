@@ -59,9 +59,9 @@ namespace SuperBot5000
             int argPos = 0;
 
             // Determine if the message is a command based on the prefix and make sure no bots trigger commands
-            if (!(message.HasCharPrefix('!', ref argPos) ||
-                message.HasMentionPrefix(_client.CurrentUser, ref argPos)) ||
-                message.Author.IsBot)
+            if (message.Author.IsBot ||
+                !(message.HasCharPrefix('!', ref argPos) ||
+                message.HasMentionPrefix(_client.CurrentUser, ref argPos)) && Listener.Listen.ForKeyWord(message))
                 return;
 
             // Create a WebSocket-based command context based on the message
@@ -82,7 +82,7 @@ namespace SuperBot5000
             // as it may clog up the request queue should a user spam a
             // command.
             if (!result.IsSuccess)
-                await context.Channel.SendMessageAsync(result.ErrorReason);
+                await context.Channel.SendMessageAsync($"{result.ErrorReason}: \"{message}\"");
 
             typing.Dispose();
         }
