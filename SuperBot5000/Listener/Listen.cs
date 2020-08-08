@@ -8,10 +8,13 @@ namespace SuperBot5000.Listener
     {
         public static bool ForKeyWord(SocketUserMessage message)
         {
-            var res = Regex.IsMatch(message.Content, @"(^|\. )[^ ]+ (was|is|should|has|had|took)");
+            Console.WriteLine("Listening for keywords");
+            var regex = @"(^|\. )[^ ]+ (was|is|should|has|had|took)";
+            var res = Regex.IsMatch(message.Content, regex);
             if (res)
             {
-                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, @"(^|\. )[^ ]+ (was|is|should|has|had|took)", "$1" + "Your mom " + "$2")}");
+                Console.WriteLine("Keywords found");
+                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, regex, "$1" + "Your mom " + "$2")}");
             }
             return res;
         }

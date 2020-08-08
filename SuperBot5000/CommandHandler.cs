@@ -59,32 +59,39 @@ namespace SuperBot5000
             int argPos = 0;
 
             // Determine if the message is a command based on the prefix and make sure no bots trigger commands
-            if (message.Author.IsBot ||
-                !(message.HasCharPrefix('!', ref argPos) ||
-                message.HasMentionPrefix(_client.CurrentUser, ref argPos)) && Listener.Listen.ForKeyWord(message))
+            if (message.Author.IsBot)
                 return;
 
-            // Create a WebSocket-based command context based on the message
-            var context = new SocketCommandContext(_client, message);
+            bool treatAsCommand = message.HasCharPrefix('!', ref argPos) ||
+                message.HasMentionPrefix(_client.CurrentUser, ref argPos);
+            
+            if (treatAsCommand)
+            {
+                // Create a WebSocket-based command context based on the message
+                var context = new SocketCommandContext(_client, message);
 
-            // Execute the command with the command context we just
-            // created, along with the service provider for precondition checks.
-            //var typing = context.Channel.EnterTypingState();
-            // Keep in mind that result does not indicate a return value
-            // rather an object stating if the command executed successfully.
-            var result = await _commands.ExecuteAsync(
-                context: context,
-                argPos: argPos,
-                services: _services);
+                // Execute the command with the command context we just
+                // created, along with the service provider for precondition checks.
+                //var typing = context.Channel.EnterTypingState();
+                // Keep in mind that result does not indicate a return value
+                // rather an object stating if the command executed successfully.
+                var result = await _commands.ExecuteAsync(
+                    context: context,
+                    argPos: argPos,
+                    services: _services);
 
-            // Optionally, we may inform the user if the command fails
-            // to be executed; however, this may not always be desired,
-            // as it may clog up the request queue should a user spam a
-            // command.
-            //if (!result.IsSuccess)
-            //    await context.Channel.SendMessageAsync($"{result.ErrorReason}: \"{message}\"");
+                // Optionally, we may inform the user if the command fails
+                // to be executed; however, this may not always be desired,
+                // as it may clog up the request queue should a user spam a
+                // command.
+                if (!result.IsSuccess)
+                    await context.Channel.SendMessageAsync($"{result.ErrorReason.Replace('.',':')} \"{message}\"");
 
-            //typing.Dispose();
+                //typing.Dispose();
+                return;
+            }
+
+            Listener.Listen.ForKeyWord(message);
         }
     }
 }
