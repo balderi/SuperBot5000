@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 using SuperBot5000.Users;
 using System;
 using System.Collections.Generic;
@@ -173,6 +174,30 @@ namespace SuperBot5000.Modules
             await Context.Client.SetStatusAsync(UserStatus.DoNotDisturb);
             await ReplyAsync("Alright, stand by!");
             Process.Start("../../../../../../buildnrun.sh");
+        }
+
+        [Command("purge")]
+        [Summary("($A) Purge specified messages")]
+        public async Task PurgeAsync(string channel, string user, string date)
+        {
+            if (!StaticResources.ValidateAdminUser(Context))
+            {
+                await ReplyAsync($"I'm sorry, {Context.User.Mention}; I'm afraid I can't let you do that.");
+                return;
+            }
+
+            if(DateTime.TryParse(date, out DateTime theDate))
+            {
+                var theChannel = Context.Guild.Channels.Select(x => x.Name == channel) as SocketGuildChannel;
+                var theUser = Context.Guild.Users.Select(x => x.Nickname == user) as SocketGuildUser;
+
+
+                await ReplyAsync($"Entered date is {theDate}, the channel is {theChannel.Name}, the user is {theUser.Nickname}");
+            }
+            else
+            {
+                await ReplyAsync("That's not a date...");
+            }
         }
 
         [Command("coins")]
