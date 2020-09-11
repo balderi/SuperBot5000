@@ -9,7 +9,7 @@ namespace SuperBot5000.Listener
         public static bool ForKeyWord(SocketUserMessage message)
         {
             Console.WriteLine("Listening for keywords");
-            var regex = @"(^|\. )[^ ]+ ('s| was| is| should| has| had| took)";
+            var regex = @"(^|\. )[^ ]+('s| was| is| should| has| had| took)";
             var res = Regex.IsMatch(message.Content, regex);
             if (res)
             {
