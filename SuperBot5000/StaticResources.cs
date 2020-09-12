@@ -18,6 +18,8 @@ namespace SuperBot5000
 
         static string[] slotsEmoji;
 
+        public static string BotName = "";
+
         public static void Init()
         {
             rnd = new Random(DateTime.Now.Millisecond);

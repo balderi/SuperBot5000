@@ -85,6 +85,8 @@ namespace SuperBot5000
                     File.Delete("pullmyfile");
                 }
             }
+
+            StaticResources.BotName = _client.CurrentUser.Username;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
