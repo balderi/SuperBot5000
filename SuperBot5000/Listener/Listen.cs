@@ -11,6 +11,7 @@ namespace SuperBot5000.Listener
             if (DateTime.Now.Subtract(StaticResources.LastListen) < TimeSpan.FromSeconds(10))
                 return false;
 
+            StaticResources.LastListen = DateTime.Now;
             string[] lol = new string[] { "ROFL", "ROFLMAO", "OLOLOLOLOL!!!!11!!one!!!!eleventyone", "LOL", "BWAHAHA" };
             Random rnd = new Random();
             Console.WriteLine("Listening for keywords");
