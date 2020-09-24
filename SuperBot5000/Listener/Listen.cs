@@ -11,8 +11,20 @@ namespace SuperBot5000.Listener
             string[] lol = new string[] { "ROFL", "ROFLMAO", "OLOLOLOLOL!!!!11!!one!!!!eleventyone", "LOL", "BWAHAHA" };
             Random rnd = new Random();
             Console.WriteLine("Listening for keywords");
-            string regex = @"(^|\. )[^ ]+('s| was| is| should| has| had| took)";
-            bool res = Regex.IsMatch(message.Content.ToLower(), regex);
+            string regex;
+            bool res;
+
+            regex = @"(^|\. )[^ ]+(why)";
+            res = Regex.IsMatch(message.Content.ToLower(), regex);
+            if (res)
+            {
+                Console.WriteLine("Keywords found");
+                message.Channel.SendMessageAsync($"{message.Author.Mention} because you touch yourself at night...");
+                return res;
+            }
+
+            regex = @"(^|\. )[^ ]+('s| was| is| should| has| had| took)";
+            res = Regex.IsMatch(message.Content.ToLower(), regex);
             if (res)
             {
                 Console.WriteLine("Keywords found");
