@@ -32,7 +32,7 @@ namespace SuperBot5000.Listener
                 return res;
             }
 
-            regex = @".*(lol|ha|hah|haha|hahaha|lul|lel|lulz).*";
+            regex = @".*(lol|hah|haha|hahaha|lul|lel|lulz).*";
             res = Regex.IsMatch(message.Content.ToLower(), regex);
             if (res)
             {
