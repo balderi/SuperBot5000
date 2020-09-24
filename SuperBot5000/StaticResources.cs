@@ -20,6 +20,8 @@ namespace SuperBot5000
 
         public static string BotName = "";
 
+        public static DateTime LastListen = DateTime.Now;
+
         public static void Init()
         {
             rnd = new Random(DateTime.Now.Millisecond);

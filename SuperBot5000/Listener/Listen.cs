@@ -8,13 +8,16 @@ namespace SuperBot5000.Listener
     {
         public static bool ForKeyWord(SocketUserMessage message)
         {
+            if (DateTime.Now.Subtract(StaticResources.LastListen) < TimeSpan.FromSeconds(10))
+                return false;
+
             string[] lol = new string[] { "ROFL", "ROFLMAO", "OLOLOLOLOL!!!!11!!one!!!!eleventyone", "LOL", "BWAHAHA" };
             Random rnd = new Random();
             Console.WriteLine("Listening for keywords");
             string regex;
             bool res;
 
-            regex = @"(^|\. )[^ ]+(why)";
+            regex = @"(^|\. )why";
             res = Regex.IsMatch(message.Content.ToLower(), regex);
             if (res)
             {
