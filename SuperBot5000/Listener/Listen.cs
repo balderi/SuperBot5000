@@ -8,8 +8,13 @@ namespace SuperBot5000.Listener
     {
         public static bool ForKeyWord(SocketUserMessage message)
         {
-            if (DateTime.Now.Subtract(StaticResources.LastListen) < TimeSpan.FromSeconds(10))
+            double wait = DateTime.Now.Subtract(StaticResources.LastListen).TotalSeconds;
+
+            if (wait < 10)
+            {
+                Console.WriteLine($"Not listening yet - too soon... ({10 - wait} seconds left)");
                 return false;
+            }
 
             StaticResources.LastListen = DateTime.Now;
             string[] lol = new string[] { "ROFL", "ROFLMAO", "OLOLOLOLOL!!!!11!!one!!!!eleventyone", "LOL", "BWAHAHA" };
