@@ -13,13 +13,13 @@ namespace SuperBot5000.Modules
     { 
         [Command("say")]
         [Summary("Echoes a message.")]
-        public Task SayAsync([Remainder] [Summary("The text to echo")] string echo)
-            => ReplyAsync(echo);
+        public async Task SayAsync([Remainder] [Summary("The text to echo")] string echo)
+            => await ReplyAsync(echo);
 
         [Command("ping")]
         [Summary("Sends the response time in milliseconds")]
-        public Task PingAsync() =>
-            ReplyAsync($"Pong! ({DateTime.Now.Subtract(Context.Message.CreatedAt.LocalDateTime).TotalMilliseconds:F2} ms)");
+        public async Task PingAsync() =>
+            await ReplyAsync($"Pong! ({DateTime.Now.Subtract(Context.Message.CreatedAt.LocalDateTime).TotalMilliseconds:F2} ms)");
 
 
         [Command("leg")]

@@ -7,7 +7,7 @@ namespace SuperBot5000.Modules
     {
         [Command("meme")]
         [Summary("Prints a super fresh meme")]
-        public Task MemeAsync() =>
-            Context.Channel.SendFileAsync(StaticResources.GetRandomMemePath(), "The freshest memes! 👌");
+        public async Task MemeAsync() =>
+            await Context.Channel.SendFileAsync(StaticResources.GetRandomMemePath(), "The freshest memes! 👌");
     }
 }
