@@ -9,6 +9,8 @@ using System.Linq;
 using SuperBot5000.Users;
 using System.Collections.Generic;
 using System.Data;
+using Microsoft.Extensions.DependencyInjection;
+using SuperBot5000.Services;
 
 namespace SuperBot5000
 {

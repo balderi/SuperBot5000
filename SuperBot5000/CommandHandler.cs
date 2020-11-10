@@ -2,6 +2,7 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using SuperBot5000.Services;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace SuperBot5000
             .AddSingleton(_client)
             .AddSingleton(_commands)
             .AddSingleton<CommandHandler>()
+            .AddSingleton<AudioService>()
             .BuildServiceProvider();
     }
 
