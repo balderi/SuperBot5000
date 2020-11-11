@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using Microsoft.Extensions.DependencyInjection;
 using SuperBot5000.Services;
+using Lavalink4NET;
 
 namespace SuperBot5000
 {
@@ -51,6 +52,10 @@ namespace SuperBot5000
             var init = new Initialize(_commandService, _client);
 
             _services = init.BuildServiceProvider();
+
+            var audioService = _services.GetRequiredService<IAudioService>();
+
+            _client.Ready += () => audioService.InitializeAsync();
 
             _commandHandler = new CommandHandler(_services, _client, _commandService);
             await _commandHandler.InstallCommandsAsync();

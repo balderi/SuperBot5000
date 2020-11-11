@@ -1,5 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
+using Lavalink4NET;
+using Lavalink4NET.Player;
 using SuperBot5000.Services;
 using System;
 using System.Collections.Generic;
@@ -11,10 +13,12 @@ namespace SuperBot5000.Modules
     public class AudioModule : ModuleBase<ICommandContext>
     {
         private readonly AudioService _service;
+        private readonly IAudioService _node;
 
-        public AudioModule(AudioService service)
+        public AudioModule(AudioService service, IAudioService node)
         {
             _service = service;
+            _node = node;
         }
 
         [Command("join", RunMode = RunMode.Async)]
@@ -32,7 +36,11 @@ namespace SuperBot5000.Modules
         [Command("play", RunMode = RunMode.Async)]
         public async Task PlayAsync([Remainder] string song)
         {
-            await _service.SendAudioAsync(Context.Guild, Context.Channel, song);
+            var player = _node.GetPlayer<LavalinkPlayer>(Context.Guild.Id) ?? await _node.JoinAsync(Context.Guild.Id, (Context.User as IVoiceState).VoiceChannel.Id);
+            var myTrack = await _node.GetTrackAsync(song, Lavalink4NET.Rest.SearchMode.YouTube);
+            await ReplyAsync($"Now playing `{myTrack.Title}`");
+            await player.PlayAsync(myTrack);
+            //await _service.SendAudioAsync(Context.Guild, Context.Channel, song);
         }
     }
 }

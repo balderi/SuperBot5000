@@ -58,8 +58,8 @@ namespace SuperBot5000.Services
                 using (var ffmpeg = CreateStream(path))
                 using (var stream = client.CreatePCMStream(AudioApplication.Music))
                 {
-                    /*try {*/ await ffmpeg.StandardOutput.BaseStream.CopyToAsync(stream); //}
-                    //finally { await stream.FlushAsync(); }
+                    try { await ffmpeg.StandardOutput.BaseStream.CopyToAsync(stream); }
+                    finally { await stream.FlushAsync(); }
                 }
             }
 

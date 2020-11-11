@@ -173,7 +173,7 @@ namespace SuperBot5000.Modules
 
             await Context.Client.SetStatusAsync(UserStatus.DoNotDisturb);
             await ReplyAsync("Alright, stand by!");
-            Process.Start("../../../../../../buildnrun.sh");
+            Process.Start("../../../../../../buildnrun2.sh");
         }
 
         [Command("purge")]

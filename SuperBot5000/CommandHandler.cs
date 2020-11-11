@@ -1,9 +1,12 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Lavalink4NET;
+using Lavalink4NET.DiscordNet;
 using Microsoft.Extensions.DependencyInjection;
 using SuperBot5000.Services;
 using System;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -28,7 +31,18 @@ namespace SuperBot5000
             .AddSingleton(_commands)
             .AddSingleton<CommandHandler>()
             .AddSingleton<AudioService>()
+            .AddSingleton<IAudioService, LavalinkNode>()
+            .AddSingleton<IDiscordClientWrapper, DiscordClientWrapper>()
+            .AddSingleton(new LavalinkNodeOptions
+            {
+                RestUri = "http://localhost:8080/",
+                WebSocketUri = "ws://localhost:8080/",
+                Password = File.ReadAllText("../lavalink.txt"),
+                BufferSize = 102400
+            })
             .BuildServiceProvider();
+
+
     }
 
     public class CommandHandler

@@ -4,13 +4,17 @@ using System.Text;
 using System.IO;
 using YoutubeExplode;
 using System.Threading.Tasks;
-using YoutubeExplode.Videos.Streams;
-using CliWrap;
+using Google.Apis.YouTube.v3;
+using Discord.WebSocket;
+using Lavalink4NET.DiscordNet;
 
 namespace SuperBot5000.Music
 {
     public class Player
     {
+        public Player(DiscordSocketClient client)
+        {
 
+        }
     }
 }
