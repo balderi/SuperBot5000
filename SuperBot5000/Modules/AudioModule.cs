@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Lavalink4NET;
+using Lavalink4NET.Events;
 using Lavalink4NET.Player;
 using SuperBot5000.Services;
 using System;
@@ -14,7 +15,6 @@ namespace SuperBot5000.Modules
     {
         private readonly AudioService _oldService;
         private readonly IAudioService _service;
-        private bool _isPlaying;
 
         public AudioModule(AudioService service, IAudioService node)
         {
@@ -37,12 +37,12 @@ namespace SuperBot5000.Modules
         [Command("play", RunMode = RunMode.Async)]
         public async Task PlayAsync([Remainder] string song)
         {
-            if (_isPlaying)
+            if (_service.GetPlayer<LavalinkPlayer>(Context.Guild.Id) != null)
             {
-                await ReplyAsync("Already playing... queue is coming soon™...");
+                await ReplyAsync($"Already playing `{_service.GetPlayer<LavalinkPlayer>(Context.Guild.Id).CurrentTrack.Title}`... queue is coming soon™...");
                 return;
             }
-            _isPlaying = true;
+
             var player = _service.GetPlayer<LavalinkPlayer>(Context.Guild.Id) 
                 ?? await _service.JoinAsync(Context.Guild.Id, (Context.User as IVoiceState).VoiceChannel.Id);
             var myTrack = await _service.GetTrackAsync(song, Lavalink4NET.Rest.SearchMode.YouTube);
