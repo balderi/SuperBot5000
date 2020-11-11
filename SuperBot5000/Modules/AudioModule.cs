@@ -49,5 +49,32 @@ namespace SuperBot5000.Modules
             await ReplyAsync($"Now playing `{myTrack.Title}`");
             await player.PlayAsync(myTrack);
         }
+
+        [Command("stop", RunMode = RunMode.Async)]
+        public async Task StopAsync()
+        {
+            if (!_service.HasPlayer(Context.Guild.Id))
+                return;
+            var player = _service.GetPlayer<LavalinkPlayer>(Context.Guild.Id);
+            await player.StopAsync();
+        }
+
+        [Command("pause", RunMode = RunMode.Async)]
+        public async Task PauseAsync()
+        {
+            if (!_service.HasPlayer(Context.Guild.Id))
+                return;
+            var player = _service.GetPlayer<LavalinkPlayer>(Context.Guild.Id);
+            await player.PauseAsync();
+        }
+
+        [Command("resume", RunMode = RunMode.Async)]
+        public async Task ResumeAsync()
+        {
+            if (!_service.HasPlayer(Context.Guild.Id))
+                return;
+            var player = _service.GetPlayer<LavalinkPlayer>(Context.Guild.Id);
+            await player.ResumeAsync();
+        }
     }
 }
