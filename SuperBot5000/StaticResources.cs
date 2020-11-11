@@ -19,6 +19,7 @@ namespace SuperBot5000
         static string[] slotsEmoji;
 
         public static string BotName = "";
+        public static ulong BotID = 0;
 
         public static DateTime LastListen = DateTime.Now;
 

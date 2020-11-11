@@ -94,6 +94,7 @@ namespace SuperBot5000
             }
 
             StaticResources.BotName = _client.CurrentUser.Username;
+            StaticResources.BotID = _client.CurrentUser.Id;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
