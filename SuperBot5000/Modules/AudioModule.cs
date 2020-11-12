@@ -69,6 +69,15 @@ namespace SuperBot5000.Modules
             await ReplyAsync($"Volume is at {(int)(_player.Volume * 100)}%");
         }
 
+        [Command("queue", RunMode = RunMode.Async)]
+        [Summary("Show playlist queue")]
+        public async Task QueueAsync([Remainder] string song)
+        {
+            _player = await GetPlayer();
+
+            await ReplyAsync(_managerService.PrintQueue(_player));
+        }
+
         [Command("play", RunMode = RunMode.Async)]
         [Summary("Play music off YouTube (direct link or search query)")]
         public async Task PlayAsync([Remainder] string song)
