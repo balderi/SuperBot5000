@@ -1,23 +1,15 @@
 ﻿using Discord.Commands;
 using System;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Linq;
-using System.Text;
 
 namespace SuperBot5000.Modules
 {
     public class InfoModule : ModuleBase<SocketCommandContext>
     { 
-        [Command("say")]
-        [Summary("Echoes a message.")]
-        public async Task SayAsync([Remainder] [Summary("The text to echo")] string echo)
-            => await ReplyAsync(echo);
-
         [Command("ping")]
-        [Summary("Sends the response time in milliseconds")]
+        [Summary("Get response time in ms")]
         public async Task PingAsync() =>
             await ReplyAsync($"Pong! ({DateTime.Now.Subtract(Context.Message.CreatedAt.LocalDateTime).TotalMilliseconds:F2} ms)");
 
@@ -36,7 +28,7 @@ namespace SuperBot5000.Modules
         }
 
         [Command("timer")]
-        [Summary("Sets a timer for the desired time interval")]
+        [Summary("Sets a timer")]
         public async Task TaskAsync(string arg)
         {
             var num = Regex.Match(arg, "\\d+").Value;

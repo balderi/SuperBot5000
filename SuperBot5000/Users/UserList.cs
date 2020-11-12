@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using System.Linq;
-using Discord.Commands;
 using Discord.WebSocket;
 
 namespace SuperBot5000.Users

@@ -1,13 +1,10 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using SuperBot5000.Users;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Xml.Schema;
 
 namespace SuperBot5000
 {
@@ -20,6 +17,9 @@ namespace SuperBot5000
 
         public static string BotName = "";
         public static ulong BotID = 0;
+
+        public static ulong CurrentGuildId = 0;
+        public static ulong CurrentVoiceChannelId = 0;
 
         public static DateTime LastListen = DateTime.Now;
 

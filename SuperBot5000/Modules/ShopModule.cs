@@ -1,11 +1,4 @@
-﻿using Discord;
-using Discord.Commands;
-using SuperBot5000.Users;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using Discord.Commands;
 using System.Text;
 using System.Threading.Tasks;
 

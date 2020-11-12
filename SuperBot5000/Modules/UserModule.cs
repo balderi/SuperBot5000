@@ -10,7 +10,7 @@ namespace SuperBot5000.Modules
     public class UserModule : ModuleBase<SocketCommandContext>
     {
         [Command("info")]
-        [Summary("Get info about the user calling.")]
+        [Summary("Get your info")]
         public async Task InfoAsync(string name = null)
         {
             User user;
@@ -49,7 +49,7 @@ namespace SuperBot5000.Modules
         }
 
         [Command("bank")]
-        [Summary("Get user's bank.")]
+        [Summary("Get your bank")]
         public async Task BankAsync()
         {
             User user = UserList.GetUserList().GetUser(Context.User);
@@ -66,7 +66,7 @@ namespace SuperBot5000.Modules
         }
 
         [Command("balance")]
-        [Summary("Get user's coin balance.")]
+        [Summary("Get your balance.")]
         public async Task BalanceAsync()
         {
             User user = UserList.GetUserList().GetUser(Context.User);
@@ -74,7 +74,7 @@ namespace SuperBot5000.Modules
         }
 
         [Command("daily")]
-        [Summary("Recieve daily coins.")]
+        [Summary("Recieve coins")]
         public async Task DailyAsync()
         {
             User user = UserList.GetUserList().GetUser(Context.User);

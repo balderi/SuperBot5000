@@ -1,80 +1,141 @@
 ﻿using Discord;
 using Discord.Commands;
 using Lavalink4NET;
-using Lavalink4NET.Events;
 using Lavalink4NET.Player;
+using Lavalink4NET.Rest;
 using SuperBot5000.Services;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SuperBot5000.Modules
 {
     public class AudioModule : ModuleBase<ICommandContext>
     {
-        private readonly AudioService _oldService;
+        private readonly AudioService _managerService;
         private readonly IAudioService _service;
+        private QueuedLavalinkPlayer _player;
 
-        public AudioModule(AudioService service, IAudioService node)
+        public AudioModule(AudioService managerService, IAudioService service)
         {
-            _oldService = service;
-            _service = node;
+            Console.WriteLine("*** Created AudioModule");
+
+            _managerService = managerService;
+            _service = service;
+
+            _managerService.Init(_service);
         }
 
         [Command("join", RunMode = RunMode.Async)]
+        [Summary("Bot joins voice")]
         public async Task JoinAsync()
         {
-            await _oldService.JoinAudio(Context.Guild, (Context.User as IVoiceState).VoiceChannel);
+            GetIds();
+            await _service.JoinAsync(StaticResources.CurrentGuildId, StaticResources.CurrentVoiceChannelId);
         }
 
         [Command("leave", RunMode = RunMode.Async)]
+        [Summary("Bot leaves voice")]
         public async Task LeaveAsync()
         {
-            await _oldService.LeaveAudio(Context.Guild);
+            _player = await GetPlayer();
+            await _player?.DisconnectAsync();
+        }
+
+        [Command("playing", RunMode = RunMode.Async)]
+        [Summary("Now playing")]
+        public async Task NowPlayingAsync()
+        {
+            _player = await GetPlayer();
+            if (_player.CurrentTrack == null)
+                await ReplyAsync("Queue is empty :(");
+            await ReplyAsync($"Now playing: `{_player.CurrentTrack.Title}`");
+        }
+
+        [Command("vol++", RunMode = RunMode.Async)]
+        [Summary("Vol += 10%")]
+        public async Task VolUpAsync()
+        {
+            _player = await GetPlayer();
+            await _player.SetVolumeAsync(_player.Volume + 0.1f);
+            await ReplyAsync($"Volume is at {(int)(_player.Volume * 100)}%");
+        }
+
+        [Command("vol--", RunMode = RunMode.Async)]
+        [Summary("Vol -= 10%")]
+        public async Task VolDnAsync()
+        {
+            _player = await GetPlayer();
+            await _player.SetVolumeAsync(_player.Volume - 0.1f);
+            await ReplyAsync($"Volume is at {(int)(_player.Volume * 100)}%");
         }
 
         [Command("play", RunMode = RunMode.Async)]
+        [Summary("Play music off YouTube (direct link or search query)")]
         public async Task PlayAsync([Remainder] string song)
         {
-            if (_service.GetPlayer<LavalinkPlayer>(Context.Guild.Id) != null)
-            {
-                await ReplyAsync($"Already playing `{_service.GetPlayer<LavalinkPlayer>(Context.Guild.Id).CurrentTrack.Title}`... queue is coming soon™...");
-                return;
-            }
+            _player = await GetPlayer();
 
-            var player = _service.GetPlayer<LavalinkPlayer>(Context.Guild.Id) 
-                ?? await _service.JoinAsync(Context.Guild.Id, (Context.User as IVoiceState).VoiceChannel.Id);
-            var myTrack = await _service.GetTrackAsync(song, Lavalink4NET.Rest.SearchMode.YouTube);
-            await ReplyAsync($"Now playing `{myTrack.Title}`");
-            await player.PlayAsync(myTrack);
+            var track = await _service.GetTrackAsync(song, SearchMode.YouTube);
+
+            await _player.PlayAsync(track, true);
+
+            await ReplyAsync($"Added `{track.Title}` to queue!\n\n{_managerService.PrintQueue(_player)}");
         }
 
         [Command("stop", RunMode = RunMode.Async)]
+        [Summary("Stop music")]
         public async Task StopAsync()
         {
-            if (!_service.HasPlayer(Context.Guild.Id))
+            if (!_service.HasPlayer(StaticResources.CurrentGuildId))
                 return;
-            var player = _service.GetPlayer<LavalinkPlayer>(Context.Guild.Id);
-            await player.StopAsync();
+            _player = await GetPlayer();
+            await _player.StopAsync();
         }
 
         [Command("pause", RunMode = RunMode.Async)]
+        [Summary("Pause music")]
         public async Task PauseAsync()
         {
-            if (!_service.HasPlayer(Context.Guild.Id))
+            if (!_service.HasPlayer(StaticResources.CurrentGuildId))
                 return;
-            var player = _service.GetPlayer<LavalinkPlayer>(Context.Guild.Id);
-            await player.PauseAsync();
+            _player = await GetPlayer();
+            await _player.PauseAsync();
         }
 
         [Command("resume", RunMode = RunMode.Async)]
+        [Summary("Resume music")]
         public async Task ResumeAsync()
         {
-            if (!_service.HasPlayer(Context.Guild.Id))
+            if (!_service.HasPlayer(StaticResources.CurrentGuildId))
                 return;
-            var player = _service.GetPlayer<LavalinkPlayer>(Context.Guild.Id);
-            await player.ResumeAsync();
+            _player = await GetPlayer();
+            await _player.ResumeAsync();
+        }
+
+        [Command("skip", RunMode = RunMode.Async)]
+        [Summary("Next track")]
+        public async Task SkipAsync()
+        {
+            if (!_service.HasPlayer(StaticResources.CurrentGuildId))
+                return;
+            _player = await GetPlayer();
+            await _player.SkipAsync();
+        }
+
+        private void GetIds()
+        {
+            StaticResources.CurrentGuildId = StaticResources.CurrentGuildId == 0 ? Context.Guild.Id: StaticResources.CurrentGuildId;
+            StaticResources.CurrentVoiceChannelId = StaticResources.CurrentVoiceChannelId == 0 ? (Context.User as IVoiceState).VoiceChannel.Id : StaticResources.CurrentVoiceChannelId;
+        }
+
+        private async Task<QueuedLavalinkPlayer> GetPlayer()
+        {
+            GetIds();
+            if (_player != null)
+                return _player;
+            var player = _service.GetPlayer<QueuedLavalinkPlayer>(StaticResources.CurrentGuildId)
+                ?? await _service.JoinAsync<QueuedLavalinkPlayer>(StaticResources.CurrentGuildId, StaticResources.CurrentVoiceChannelId);
+            return player;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Discord.Commands;
-using Discord.WebSocket;
+﻿using Discord.WebSocket;
 using System;
 
 namespace SuperBot5000.Users

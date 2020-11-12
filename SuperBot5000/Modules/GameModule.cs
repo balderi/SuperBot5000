@@ -28,7 +28,7 @@ namespace SuperBot5000.Modules
         }
 
         [Command("multislots")]
-        [Summary("Play multislots - use `slots help` to get help")]
+        [Summary("Play multislots")]
         public async Task MultislotsAsync(string arg = "3", long bet = 10)
         {
             if(arg == "help")

@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using YoutubeExplode;
-using System.Threading.Tasks;
-using Google.Apis.YouTube.v3;
-using Discord.WebSocket;
-using Lavalink4NET.DiscordNet;
+﻿using System.Threading.Tasks;
+using Lavalink4NET.Player;
+using Lavalink4NET.Events;
+using Lavalink4NET;
 
 namespace SuperBot5000.Music
 {
-    public class Player
+    internal sealed class SuperPlayer : QueuedLavalinkPlayer
     {
-        public Player(DiscordSocketClient client)
+        public SuperPlayer(IDiscordClientWrapper client, ulong guildId) : base()
         {
 
+        }
+
+        public override async Task OnTrackStartedAsync(TrackStartedEventArgs e)
+        {
+            await base.OnTrackStartedAsync(e);
         }
     }
 }

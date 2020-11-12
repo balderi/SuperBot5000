@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SuperBot5000.Users
+﻿namespace SuperBot5000.Users
 {
     public class Bank
     {

@@ -28,7 +28,12 @@ namespace SuperBot5000.Modules
 
             foreach(CommandInfo c in commands)
             {
-                if(!c.Summary.Contains("$A"))
+                if (c.Summary == null)
+                {
+                    sb.AppendLine($" • `{c.Name}` - No description");
+                    continue;
+                }
+                if (!c.Summary.Contains("$A"))
                     sb.AppendLine($" • `{c.Name}` - {c.Summary}");
             }
 
