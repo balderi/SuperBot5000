@@ -71,7 +71,7 @@ namespace SuperBot5000.Modules
 
         [Command("queue", RunMode = RunMode.Async)]
         [Summary("Show playlist queue")]
-        public async Task QueueAsync([Remainder] string song)
+        public async Task QueueAsync()
         {
             _player = await GetPlayer();
 
