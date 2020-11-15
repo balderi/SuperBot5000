@@ -143,7 +143,7 @@ namespace SuperBot5000.Modules
             if (_player != null)
                 return _player;
             var player = _service.GetPlayer<QueuedLavalinkPlayer>(StaticResources.CurrentGuildId)
-                ?? await _service.JoinAsync<QueuedLavalinkPlayer>(StaticResources.CurrentGuildId, StaticResources.CurrentVoiceChannelId);
+                ?? await _service.JoinAsync<QueuedLavalinkPlayer>(StaticResources.CurrentGuildId, (Context.User as IVoiceState).VoiceChannel.Id);
             return player;
         }
     }
