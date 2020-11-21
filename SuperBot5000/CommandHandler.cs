@@ -106,7 +106,8 @@ namespace SuperBot5000
                 return;
             }
 
-            Listener.Listen.ForKeyWord(message);
+            if(Listener.Listen.ForKeyWord(message))
+                StaticResources.LastListen = DateTime.Now;
         }
     }
 }

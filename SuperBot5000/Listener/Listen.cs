@@ -1,5 +1,6 @@
 ﻿using Discord.WebSocket;
 using System;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace SuperBot5000.Listener
@@ -16,12 +17,20 @@ namespace SuperBot5000.Listener
                 return false;
             }
 
-            StaticResources.LastListen = DateTime.Now;
+            //StaticResources.LastListen = DateTime.Now;
             string[] lol = new string[] { "ROFL", "ROFLMAO", "OLOLOLOLOL!!!!11!!one!!!!eleventyone", "LOL", "BWAHAHA" };
+            string[] bangalore = File.ReadAllLines("bangalore.txt");
             Random rnd = new Random();
             Console.WriteLine("Listening for keywords");
             string regex;
             bool res;
+
+            if(message.Content.ToLower().Contains("apex"))
+            {
+                Console.WriteLine("Keywords found");
+                message.Channel.SendMessageAsync(bangalore[rnd.Next(bangalore.Length)]);
+                return true;
+            }
 
             regex = @"(^|\. )why";
             res = Regex.IsMatch(message.Content.ToLower(), regex);
