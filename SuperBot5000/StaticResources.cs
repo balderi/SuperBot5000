@@ -11,7 +11,7 @@ namespace SuperBot5000
     public class StaticResources
     {
         static Random rnd ;
-        static List<string> memes;
+        static List<string> memes, strange;
 
         static string[] slotsEmoji;
 
@@ -27,6 +27,7 @@ namespace SuperBot5000
         {
             rnd = new Random(DateTime.Now.Millisecond);
             memes = Directory.GetFiles("memes").ToList();
+            strange = Directory.GetFiles("strange").ToList();
             slotsEmoji = new string[]
             {
                 "🍇", "🍌", "🍒", "❤️", "🔔", "🏆", "🎺", "💎", "💰", "👑", "⚜️", "⭐", "🎲", "🍀", "🍋", "7️⃣", "🙂"
@@ -34,6 +35,8 @@ namespace SuperBot5000
         }
 
         public static string GetRandomMemePath() => memes[rnd.Next(0, memes.Count)];
+
+        public static string GetRandomStrangePath() => strange[rnd.Next(0, strange.Count)];
 
         public static int GetRandomSlotsValue() => rnd.Next(0, slotsEmoji.Length);
 
