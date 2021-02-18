@@ -75,10 +75,19 @@ namespace SuperBot5000.Modules
         [Summary("Get http status")]
         public async Task StatusAsync(string address)
         {
+            if (!address.Contains("http"))
+                address = "http://" + address;
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(address);
             req.AllowAutoRedirect = false;
-            var resp = (HttpWebResponse)req.GetResponse();
-            await ReplyAsync($"{address} responds `{resp.StatusCode}: {resp.StatusDescription}`");
+            try
+            {
+                var resp = (HttpWebResponse)req.GetResponse();
+                await ReplyAsync($"{address} responds `{resp.StatusCode}: {resp.StatusDescription}`");
+            }
+            catch(Exception e)
+            {
+                await ReplyAsync($"Exception caught: {e.Message}");
+            }
         }
     }
 }
