@@ -84,9 +84,9 @@ namespace SuperBot5000.Modules
                 var resp = (HttpWebResponse)req.GetResponse();
                 await ReplyAsync($"{address} responds `{(int)resp.StatusCode}: {resp.StatusDescription}`");
             }
-            catch(Exception e)
+            catch(WebException we)
             {
-                await ReplyAsync($"Exception caught: {e.Message}");
+                await ReplyAsync($"{address} responds `{(int)((HttpWebResponse)we.Response).StatusCode}: {((HttpWebResponse)we.Response).StatusDescription}`");
             }
         }
     }
