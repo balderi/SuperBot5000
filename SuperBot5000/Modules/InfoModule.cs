@@ -86,11 +86,14 @@ namespace SuperBot5000.Modules
             }
             catch(WebException we)
             {
-                await ReplyAsync($"Response: `{(int)((HttpWebResponse)we.Response).StatusCode} - {((HttpWebResponse)we.Response).StatusDescription}`");
+                if(we.Response != null)
+                    await ReplyAsync($"Response: `{(int)((HttpWebResponse)we.Response).StatusCode} - {((HttpWebResponse)we.Response).StatusDescription}`");
+                else
+                    await ReplyAsync($"Response: `404 - Not Found`");
             }
-            catch(Exception e)
+            catch
             {
-                await ReplyAsync($"Response `404 - Not Found`");
+                await ReplyAsync($"Response: `404 - Not Found`");
             }
         }
     }
