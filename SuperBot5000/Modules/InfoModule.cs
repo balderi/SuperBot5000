@@ -89,11 +89,11 @@ namespace SuperBot5000.Modules
                 if(we.Response != null)
                     await ReplyAsync($"Response: `{(int)((HttpWebResponse)we.Response).StatusCode} - {((HttpWebResponse)we.Response).StatusDescription}`");
                 else
-                    await ReplyAsync($"Response: `404 - Not Found`");
+                    await ReplyAsync($"Response: `408 - Request Timeout`");
             }
             catch
             {
-                await ReplyAsync($"Response: `404 - Not Found`");
+                await ReplyAsync($"Response: `400 - Bad Request`");
             }
         }
     }
