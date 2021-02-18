@@ -82,7 +82,7 @@ namespace SuperBot5000.Modules
             try
             {
                 var resp = (HttpWebResponse)req.GetResponse();
-                await ReplyAsync($"{address} responds `{resp.StatusCode}: {resp.StatusDescription}`");
+                await ReplyAsync($"{address} responds `{(int)resp.StatusCode}: {resp.StatusDescription}`");
             }
             catch(Exception e)
             {
