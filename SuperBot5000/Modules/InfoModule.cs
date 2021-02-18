@@ -82,11 +82,15 @@ namespace SuperBot5000.Modules
             try
             {
                 var resp = (HttpWebResponse)req.GetResponse();
-                await ReplyAsync($"{address} responds `{(int)resp.StatusCode}: {resp.StatusDescription}`");
+                await ReplyAsync($"Response: `{(int)resp.StatusCode} - {resp.StatusDescription}`");
             }
             catch(WebException we)
             {
-                await ReplyAsync($"{address} responds `{(int)((HttpWebResponse)we.Response).StatusCode}: {((HttpWebResponse)we.Response).StatusDescription}`");
+                await ReplyAsync($"Response: `{(int)((HttpWebResponse)we.Response).StatusCode} - {((HttpWebResponse)we.Response).StatusDescription}`");
+            }
+            catch(Exception e)
+            {
+                await ReplyAsync($"Response `404 - Not Found`");
             }
         }
     }
