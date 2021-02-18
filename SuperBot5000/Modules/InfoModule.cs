@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Net;
 
 namespace SuperBot5000.Modules
 {
@@ -68,6 +69,16 @@ namespace SuperBot5000.Modules
         {
             Context.Channel.SendMessageAsync($"{Context.User.Mention} your time's up!");
             (sender as System.Timers.Timer).Stop();
+        }
+
+        [Command("status")]
+        [Summary("Get http status")]
+        public async Task StatusAsync(string address)
+        {
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(address);
+            req.AllowAutoRedirect = false;
+            var resp = (HttpWebResponse)req.GetResponse();
+            await ReplyAsync($"{address} responds `{resp.StatusCode}: {resp.StatusDescription}`");
         }
     }
 }
