@@ -28,7 +28,9 @@ namespace SuperBot5000
 
         IServiceProvider _services;
 
-        System.Timers.Timer _timer;
+        IReadOnlyCollection<SocketGuildUser> _guildUsers;
+
+        System.Timers.Timer _updateUsersTimer;
 
         List<User> _users;
         List<string> _names;
@@ -55,6 +57,7 @@ namespace SuperBot5000
             var audioService = _services.GetRequiredService<IAudioService>();
 
             _client.Ready += () => audioService.InitializeAsync();
+            _client.Ready += On_Ready;
 
             _commandHandler = new CommandHandler(_services, _client, _commandService);
             await _commandHandler.InstallCommandsAsync();
@@ -62,12 +65,10 @@ namespace SuperBot5000
             await _client.LoginAsync(TokenType.Bot, Environment.GetEnvironmentVariable("DiscordToken"));
             await _client.StartAsync();
 
-            _timer = new System.Timers.Timer(10000);
-            _timer.Elapsed += Timer_Tick;
+            _updateUsersTimer = new System.Timers.Timer(10000);
+            _updateUsersTimer.Elapsed += UpdateUsersTimer_Tick;
 
-            _timer.Start();
-
-            _client.Ready += On_Ready;
+            _updateUsersTimer.Start();
 
             // Block this task until the program is closed.
             await Task.Delay(-1);
@@ -96,10 +97,9 @@ namespace SuperBot5000
             StaticResources.BotID = _client.CurrentUser.Id;
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void UpdateUsersTimer_Tick(object sender, EventArgs e)
         {
-            var _guildUsers = _client.GetGuild(252801284439015424).Users;
-            //update users
+            _guildUsers = _client.GetGuild(252801284439015424).Users;
             foreach (SocketUser user in _guildUsers)
             {
                 UserList.GetUserList().GetUser(user);
@@ -107,14 +107,13 @@ namespace SuperBot5000
             _users = UserList.GetUserList().Users;
             _names = _users.Select(x => x.Name).ToList();
             var olUsers = _guildUsers.Where(x => x.Status != UserStatus.Offline).Where(x => _names.Contains(x.Mention)).Select(x => x.Mention).ToList();
-            foreach(User u in _users.Where(x => olUsers.Contains(x.Name)))
+            foreach (User u in _users.Where(x => olUsers.Contains(x.Name)))
             {
                 u.IncrementOLPoints();
                 u.TryRedeemOLPoints();
             }
             UserList.GetUserList().SaveList();
         }
-
         private Task Log(LogMessage msg)
         {
             Console.WriteLine(msg.ToString());

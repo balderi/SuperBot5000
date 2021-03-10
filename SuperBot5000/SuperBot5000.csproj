@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CliWrap" Version="3.2.3" />
-    <PackageReference Include="Discord.Net" Version="2.2.0" />
+    <PackageReference Include="Discord.Net" Version="2.3.0" />
     <PackageReference Include="Google.Apis" Version="1.49.0" />
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.49.0.2120" />
     <PackageReference Include="Lavalink4NET.Discord.NET" Version="1.6.1" />
@@ -672,6 +672,9 @@
     </None>
     <None Update="timmy.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="users.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
