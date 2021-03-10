@@ -56,8 +56,8 @@ namespace SuperBot5000
 
             var audioService = _services.GetRequiredService<IAudioService>();
 
-            _client.Ready += () => audioService.InitializeAsync();
             _client.Ready += On_Ready;
+            _client.Ready += () => audioService.InitializeAsync();
 
             _commandHandler = new CommandHandler(_services, _client, _commandService);
             await _commandHandler.InstallCommandsAsync();
@@ -114,6 +114,7 @@ namespace SuperBot5000
             }
             UserList.GetUserList().SaveList();
         }
+
         private Task Log(LogMessage msg)
         {
             Console.WriteLine(msg.ToString());

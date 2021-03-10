@@ -49,7 +49,7 @@ namespace SuperBot5000.Services
             TrackQueue.Add(track);
         }
 
-        public string PrintQueue(QueuedLavalinkPlayer player)
+        public static string PrintQueue(QueuedLavalinkPlayer player)
         {
             if (player.Queue.IsEmpty)
                 return "";
@@ -62,7 +62,7 @@ namespace SuperBot5000.Services
             return sb.ToString();
         }
 
-        public async Task TrackStarted(object sender, TrackStartedEventArgs e)
+        public static async Task TrackStarted(object sender, TrackStartedEventArgs e)
         {
             var player = e.Player as QueuedLavalinkPlayer;
 
@@ -75,12 +75,13 @@ namespace SuperBot5000.Services
             {
                 Console.WriteLine("Track title was null on track start");
             }
+            await Task.CompletedTask;
         }
 
-        public async Task TrackEnded(object sender, TrackEndEventArgs e)
+        public static async Task TrackEnded(object sender, TrackEndEventArgs e)
         {
             var player = e.Player as QueuedLavalinkPlayer;
-            
+            await Task.CompletedTask;
         }
     }
 }

@@ -3,6 +3,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <Company>Redlab Solutions</Company>
+    <Authors>Balder Ivarsen</Authors>
+    <Copyright>Redlab Solutions</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

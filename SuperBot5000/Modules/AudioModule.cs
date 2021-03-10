@@ -75,7 +75,7 @@ namespace SuperBot5000.Modules
         {
             _player = await GetPlayer();
 
-            await ReplyAsync(_managerService.PrintQueue(_player));
+            await ReplyAsync(AudioService.PrintQueue(_player));
         }
 
         [Command("play", RunMode = RunMode.Async)]
@@ -88,7 +88,7 @@ namespace SuperBot5000.Modules
 
             await _player.PlayAsync(track, true);
 
-            await ReplyAsync($"Added `{track.Title}` to queue!\n\n{_managerService.PrintQueue(_player)}");
+            await ReplyAsync($"Added `{track.Title}` to queue!\n\n{AudioService.PrintQueue(_player)}");
         }
 
         [Command("stop", RunMode = RunMode.Async)]
