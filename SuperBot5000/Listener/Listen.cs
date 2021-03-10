@@ -65,7 +65,7 @@ namespace SuperBot5000.Listener
             {
                 var match = Regex.Match(message.Content, regex);
                 Console.WriteLine("Keywords found");
-                message.Channel.SendMessageAsync($"Hi, {match.Groups[2]}, I'm {StaticResources.BotName}!");
+                message.Channel.SendMessageAsync($"Hi, {match.Groups[2]}, I'm {StaticResources.BotName ?? "testbot"}!");
                 return res;
             }
             Console.WriteLine("No keywords found");
