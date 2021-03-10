@@ -11,9 +11,9 @@ namespace SuperBot5000.Listener
         {
             double wait = DateTime.Now.Subtract(StaticResources.LastListen).TotalSeconds;
 
-            if (wait < 5)
+            if (wait < 3)
             {
-                Console.WriteLine($"Not listening yet - too soon... ({10 - wait} seconds left)");
+                Console.WriteLine($"Not listening yet - too soon... ({3 - wait} seconds left)");
                 return false;
             }
 
@@ -65,7 +65,7 @@ namespace SuperBot5000.Listener
             {
                 var match = Regex.Match(message.Content, regex);
                 Console.WriteLine("Keywords found");
-                message.Channel.SendMessageAsync($"Hi, {match.Groups[2]}, I'm {StaticResources.BotName ?? "testbot"}!");
+                message.Channel.SendMessageAsync($"Hi, {match.Groups[2]}, I'm {StaticResources.BotName ?? "a bot"}!");
                 return res;
             }
             Console.WriteLine("No keywords found");
