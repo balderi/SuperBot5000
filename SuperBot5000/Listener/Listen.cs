@@ -11,9 +11,9 @@ namespace SuperBot5000.Listener
         {
             double wait = DateTime.Now.Subtract(StaticResources.LastListen).TotalSeconds;
 
-            if (wait < 3)
+            if (wait < StaticResources.ListenDelay)
             {
-                Console.WriteLine($"Not listening yet - too soon... ({3 - wait} seconds left)");
+                Console.WriteLine($"Not listening yet - too soon... ({StaticResources.ListenDelay - wait:N2} seconds left)");
                 return false;
             }
 

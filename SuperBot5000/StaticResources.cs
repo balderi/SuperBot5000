@@ -23,6 +23,8 @@ namespace SuperBot5000
 
         public static DateTime LastListen = DateTime.Now;
 
+        public static int ListenDelay = 3;
+
         public static void Init()
         {
             rnd = new Random(DateTime.Now.Millisecond);
