@@ -91,6 +91,21 @@ namespace SuperBot5000.Modules
             await ReplyAsync($"Added `{track.Title}` to queue!\n\n{AudioService.PrintQueue(_player)}");
         }
 
+        [Command("nadås", RunMode = RunMode.Async)]
+        public async Task Nadås(string full = null)
+        {
+            _player = await GetPlayer();
+
+            var track = await _service.GetTrackAsync("nadås.mp3");
+
+            if (full != null)
+            {
+                track = await _service.GetTrackAsync("nadåsf.wav");
+            }
+
+            await _player.PlayAsync(track, true);
+        }
+
         [Command("stop", RunMode = RunMode.Async)]
         [Summary("Stop music")]
         public async Task StopAsync()
