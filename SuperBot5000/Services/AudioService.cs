@@ -26,6 +26,7 @@ namespace SuperBot5000.Services
             try { service.TrackEnd -= TrackEnded; }
             finally { service.TrackEnd += TrackEnded; }
             _isInitialized = true;
+            Console.WriteLine("*** Initialized AudioService");
         }
 
         public LavalinkTrack GetNextTrack()

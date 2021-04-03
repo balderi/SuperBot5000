@@ -92,6 +92,7 @@ namespace SuperBot5000.Modules
         }
 
         [Command("nadås", RunMode = RunMode.Async)]
+        [Summary("wat")]
         public async Task Nadås(string full = null)
         {
             _player = await GetPlayer();
@@ -148,8 +149,8 @@ namespace SuperBot5000.Modules
 
         private void GetIds()
         {
-            StaticResources.CurrentGuildId = StaticResources.CurrentGuildId == 0 ? Context.Guild.Id: StaticResources.CurrentGuildId;
-            StaticResources.CurrentVoiceChannelId = StaticResources.CurrentVoiceChannelId == 0 ? (Context.User as IVoiceState).VoiceChannel.Id : StaticResources.CurrentVoiceChannelId;
+            StaticResources.CurrentGuildId = Context.Guild.Id;
+            StaticResources.CurrentVoiceChannelId = (Context.User as IVoiceState).VoiceChannel.Id;
         }
 
         private async Task<QueuedLavalinkPlayer> GetPlayer()
@@ -157,6 +158,7 @@ namespace SuperBot5000.Modules
             GetIds();
             if (_player != null)
                 return _player;
+            Console.WriteLine("Player is null - creating new Player!");
             var player = _service.GetPlayer<QueuedLavalinkPlayer>(StaticResources.CurrentGuildId)
                 ?? await _service.JoinAsync<QueuedLavalinkPlayer>(StaticResources.CurrentGuildId, (Context.User as IVoiceState).VoiceChannel.Id);
             return player;
