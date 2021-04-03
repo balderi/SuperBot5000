@@ -104,6 +104,8 @@ namespace SuperBot5000.Modules
                 track = await _service.GetTrackAsync("nadåsf.wav");
             }
 
+            Console.WriteLine($"Playing track: {track.Title}");
+
             await _player.PlayAsync(track, true);
         }
 
