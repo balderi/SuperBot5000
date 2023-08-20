@@ -1,4 +1,5 @@
-﻿using Discord.WebSocket;
+﻿using Discord;
+using Discord.WebSocket;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -20,16 +21,77 @@ namespace SuperBot5000.Listener
             //StaticResources.LastListen = DateTime.Now;
             string[] lol = new string[] { "ROFL", "ROFLMAO", "OLOLOLOLOL!!!!11!!one!!!!eleventyone", "LOL", "BWAHAHA" };
             string[] bangalore = File.ReadAllLines("bangalore.txt");
-            Random rnd = new Random();
+            Random rnd = new();
             Console.WriteLine("Listening for keywords");
             string regex;
             bool res;
 
-            if(message.Content.ToLower().Contains("apex"))
+            regex = @"(\uD83D\uDE41|\uD83D\uDE26|\u2639|\uD83D\uDE22|\uD83D\uDE2D|\uD83D\uDE3F)";
+            res = Regex.IsMatch(message.Content.ToLower(), regex);
+            if (res)
+            {
+                Console.WriteLine("Keywords found");
+                message.AddReactionAsync(new Emoji("\u2764"));
+            }
+
+            if (message.Content.ToLower().Contains("apex"))
             {
                 Console.WriteLine("Keywords found");
                 message.Channel.SendMessageAsync(bangalore[rnd.Next(bangalore.Length)]);
                 return true;
+            }
+
+            if (message.Content.ToLower().Contains("tænk hvis"))
+            {
+                Console.WriteLine("Keywords found");
+                message.Channel.SendMessageAsync($"Tænk hvis {message.Author.Mention} kunne synge... \uD83E\uDD14");
+                return true;
+            }
+
+            if (message.Content.ToLower() == "ja")
+            {
+                Console.WriteLine("Keywords found");
+                message.Channel.SendMessageAsync("Nej");
+                return true;
+            }
+
+            if (message.Content.ToLower() == "nej")
+            {
+                Console.WriteLine("Keywords found");
+                message.Channel.SendMessageAsync("Ja");
+                return true;
+            }
+
+            if (message.Content.ToLower() == "jo")
+            {
+                Console.WriteLine("Keywords found");
+                message.Channel.SendMessageAsync("Næh");
+                return true;
+            }
+
+            if (message.Content.ToLower() == "næh")
+            {
+                Console.WriteLine("Keywords found");
+                message.Channel.SendMessageAsync("Jo");
+                return true;
+            }
+
+            regex = @"(^|)hvorfor";
+            res = Regex.IsMatch(message.Content.ToLower(), regex);
+            if (res)
+            {
+                Console.WriteLine("Keywords found");
+                message.Channel.SendMessageAsync($"{message.Author.Mention} fordi du piller ved dig selv om natten...");
+                return res;
+            }
+
+            regex = @"(^|)[^ ]+( var| er| skulle| har| havde| tog)";
+            res = Regex.IsMatch(message.Content.ToLower(), regex);
+            if (res)
+            {
+                Console.WriteLine("Keywords found");
+                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, regex, "$1" + "Din mor" + "$2")}");
+                return res;
             }
 
             regex = @"(^|\. )why";

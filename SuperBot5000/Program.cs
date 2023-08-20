@@ -19,9 +19,7 @@ namespace SuperBot5000
         CommandService _commandService;
         CommandHandler _commandHandler;
 
-#pragma warning disable IDE0060 // Remove unused parameter
-        public static void Main(string[] args)
-#pragma warning restore IDE0060 // Remove unused parameter
+        public static void Main()
         => new Program().MainAsync().GetAwaiter().GetResult();
 
         private DiscordSocketClient _client;
@@ -44,7 +42,7 @@ namespace SuperBot5000
             await Log(new LogMessage(LogSeverity.Info, "Main", $"Currently contains {UserList.GetUserList().GetNumberOfUsers()} users."));
 
             Environment.SetEnvironmentVariable("DiscordToken", File.ReadAllText("../../token.txt"));
-            _client = new DiscordSocketClient();
+            _client = new DiscordSocketClient(new DiscordSocketConfig { GatewayIntents = GatewayIntents.All });
 
             _client.Log += Log;
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Net;
+using System.Net.Http;
 
 namespace SuperBot5000.Modules
 {
@@ -58,7 +59,7 @@ namespace SuperBot5000.Modules
 
             double interval = Convert.ToDouble(num) * mult;
 
-            System.Timers.Timer timer = new System.Timers.Timer(interval);
+            System.Timers.Timer timer = new(interval);
             timer.Elapsed += Timer_Tick;
 
             await ReplyAsync($"Alright, I've set a timer for {num} {respType}!");
@@ -77,12 +78,12 @@ namespace SuperBot5000.Modules
         {
             if (!address.Contains("http"))
                 address = "http://" + address;
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(address);
-            req.AllowAutoRedirect = false;
+            HttpClient http = new();
+            HttpRequestMessage message = new(new HttpMethod("get"), address);
+            var response = await http.SendAsync(message);
             try
             {
-                var resp = (HttpWebResponse)req.GetResponse();
-                await ReplyAsync($"Response: `{(int)resp.StatusCode} - {resp.StatusDescription}`");
+                await ReplyAsync($"Response: `{response.StatusCode} - {response.ReasonPhrase}`");
             }
             catch(WebException we)
             {
