@@ -147,13 +147,13 @@ namespace SuperBot5000.Listener
 
         private void CreateResponseList(SocketUserMessage message)
         {
-            _responses.Add(new ListenerResponse(message, 
-                "(^|)hvorfor", 
-                "fordi du piller ved dig selv om natten...", 
+            _responses.Add(new ListenerResponse(message,
+                "(^|)hvorfor",
+                "fordi du piller ved dig selv om natten...",
                 false));
-            _responses.Add(new ListenerResponse(message, 
+            _responses.Add(new ListenerResponse(message,
                 "(^|Jeg|Den|Det|Du|Vi|I|Dem)( var| er| skulle| har| havde| tog)",
-                "$1" + "Din mor" + "$2", 
+                "$1" + "Din mor" + "$2",
                 true));
             _responses.Add(new ListenerResponse(message,
                 "(^|jeg|den|det|du|vi|I|dem)( var| er| skulle| har| havde| tog)",

@@ -9,7 +9,7 @@ using System.Net.Http;
 namespace SuperBot5000.Modules
 {
     public class InfoModule : ModuleBase<SocketCommandContext>
-    { 
+    {
         [Command("ping")]
         [Summary("Get response time in ms")]
         public async Task PingAsync() =>
@@ -40,7 +40,7 @@ namespace SuperBot5000.Modules
 
             double mult = 0;
 
-            switch(type)
+            switch (type)
             {
                 default:
                 case "s":
@@ -83,16 +83,16 @@ namespace SuperBot5000.Modules
             var response = await http.SendAsync(message);
             try
             {
-                await ReplyAsync($"Response: `{response.StatusCode} - {response.ReasonPhrase}`");
+                await ReplyAsync($"Response: `{(int)response.StatusCode} - {response.ReasonPhrase}`");
             }
-            catch(WebException we)
+            catch (WebException we)
             {
-                if(we.Response != null)
+                if (we.Response != null)
                     await ReplyAsync($"Response: `{(int)((HttpWebResponse)we.Response).StatusCode} - {((HttpWebResponse)we.Response).StatusDescription}`");
                 else
                     await ReplyAsync($"No response... `{we.Message}`");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 await ReplyAsync($"Something went wrong: `{e.Message}`");
             }

@@ -13,6 +13,6 @@ namespace SuperBot5000.Modules
         [Command("strange")]
         [Summary("Strange planet comics")]
         public async Task StrangeAsync() =>
-            await Context.Channel.SendFileAsync(StaticResources.GetRandomStrangePath(), "https://www.instagram.com/nathanwpylestrangeplanet/");
+            await Context.Channel.SendFileAsync(StaticResources.GetRandomStrangePath(), "@nathanwpylestrangeplanet");
     }
 }

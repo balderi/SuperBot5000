@@ -7,14 +7,12 @@ namespace SuperBot5000.Games
 {
     public static class Timmy
     {
-        private static readonly Random rnd = new Random(DateTime.Now.Millisecond);
-        private static readonly List<TimmyPoem> timmyPoems = JsonConvert.DeserializeObject<List<TimmyPoem>>(File.ReadAllText("timmy.json"));
+        private static readonly Random _rnd = new();
+        private static readonly List<TimmyPoem> _timmyPoems = JsonConvert.DeserializeObject<List<TimmyPoem>>(File.ReadAllText("timmy.json"));
 
         public static TimmyPoem GetPoem()
         {
-            var poem = new TimmyPoem();
-
-            return timmyPoems[rnd.Next(0, timmyPoems.Count)];
+            return _timmyPoems[_rnd.Next(0, _timmyPoems.Count)];
         }
     }
 
