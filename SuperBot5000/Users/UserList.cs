@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
 using System.Linq;
 using Discord.WebSocket;
+using System.Text.Json;
 
 namespace SuperBot5000.Users
 {
     public class UserList
     {
-        public List<User> Users { get; set; }
+        public List<User> Users { get; set; } = new();
 
         private UserList()
         {
-            Users = new List<User>();
+            Users = LoadList();
         }
 
         private static UserList _userList = null;
@@ -22,7 +22,7 @@ namespace SuperBot5000.Users
         {
             if(_userList == null)
             {
-                _userList = LoadList();
+                _userList = new UserList();
             }
             return _userList;
         }
@@ -35,7 +35,7 @@ namespace SuperBot5000.Users
             }
             catch
             {
-                User u = new User(user);
+                User u = new(user);
                 Users.Add(u);
                 SaveList();
                 Console.WriteLine($"Created user {user.Username}.");
@@ -64,22 +64,28 @@ namespace SuperBot5000.Users
 
         public void SaveList()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(UserList));
-            TextWriter writer = new StreamWriter("users.xml");
-            serializer.Serialize(writer, this);
+            var jsonString = JsonSerializer.Serialize(Users);
+            TextWriter writer = new StreamWriter("users.json");
+            writer.Write(jsonString);
             writer.Close();
         }
 
-        private static UserList LoadList()
+        private static List<User> LoadList()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(UserList));
-            if(!File.Exists("users.xml"))
+            if(!File.Exists("users.json"))
             {
-                File.Create("users.xml");
-                return new UserList();
+                _userList.SaveList();
+                return LoadList();
             }
-            FileStream fs = new FileStream("users.xml", FileMode.Open);
-            return (UserList)serializer.Deserialize(fs);
+
+            StreamReader reader = new("users.json");
+
+            var jsonString = reader.ReadToEnd();
+            reader.Close();
+
+            var userList = JsonSerializer.Deserialize<List<User>>(jsonString);
+
+            return userList;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -8,9 +9,11 @@ namespace SuperBot5000.Listener
 {
     public class Listen
     {
+        private static List<ListenerResponse> _responses = new();
+
         public static bool ForKeyWord(SocketUserMessage message)
         {
-            double wait = DateTime.Now.Subtract(StaticResources.LastListen).TotalSeconds;
+            double wait = DateTime.UtcNow.Subtract(StaticResources.LastListen).TotalSeconds;
 
             if (wait < StaticResources.ListenDelay)
             {
@@ -18,7 +21,6 @@ namespace SuperBot5000.Listener
                 return false;
             }
 
-            //StaticResources.LastListen = DateTime.Now;
             string[] lol = new string[] { "ROFL", "ROFLMAO", "OLOLOLOLOL!!!!11!!one!!!!eleventyone", "LOL", "BWAHAHA" };
             string[] bangalore = File.ReadAllLines("bangalore.txt");
             Random rnd = new();
@@ -85,12 +87,21 @@ namespace SuperBot5000.Listener
                 return res;
             }
 
-            regex = @"(^|)[^ ]+( var| er| skulle| har| havde| tog)";
-            res = Regex.IsMatch(message.Content.ToLower(), regex);
+            regex = @"(^|Jeg|Den|Det|Du|Vi|I|Dem)( var| er| skulle| har| havde| tog)";
+            res = Regex.IsMatch(message.Content.ToLower(), regex, RegexOptions.Multiline);
             if (res)
             {
                 Console.WriteLine("Keywords found");
                 message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, regex, "$1" + "Din mor" + "$2")}");
+                return res;
+            }
+
+            regex = @"(^|jeg|den|det|du|vi|I|dem)( var| er| skulle| har| havde| tog)";
+            res = Regex.IsMatch(message.Content.ToLower(), regex);
+            if (res)
+            {
+                Console.WriteLine("Keywords found");
+                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, regex, "$1" + "din mor" + "$2")}");
                 return res;
             }
 
@@ -132,6 +143,30 @@ namespace SuperBot5000.Listener
             }
             Console.WriteLine("No keywords found");
             return res;
+        }
+
+        private void CreateResponseList(SocketUserMessage message)
+        {
+            _responses.Add(new ListenerResponse(message, 
+                "(^|)hvorfor", 
+                "fordi du piller ved dig selv om natten...", 
+                false));
+            _responses.Add(new ListenerResponse(message, 
+                "(^|Jeg|Den|Det|Du|Vi|I|Dem)( var| er| skulle| har| havde| tog)",
+                "$1" + "Din mor" + "$2", 
+                true));
+            _responses.Add(new ListenerResponse(message,
+                "(^|jeg|den|det|du|vi|I|dem)( var| er| skulle| har| havde| tog)",
+                "$1" + "din mor" + "$2",
+                true));
+            _responses.Add(new ListenerResponse(message,
+                "(^|\\. )[^ ]+('s| was| is| should| has| had| took)",
+                "$1" + "Your mom" + "$2",
+                true));
+            _responses.Add(new ListenerResponse(message,
+                "(^|\\. )why",
+                "because you touch yourself at night...",
+                false));
         }
     }
 }

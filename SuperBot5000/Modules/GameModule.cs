@@ -2,6 +2,7 @@
 using Discord.Commands;
 using SuperBot5000.Games;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SuperBot5000.Modules
@@ -15,6 +16,12 @@ namespace SuperBot5000.Modules
             if (arg.ToLower() == "help")
             {
                 await ReplyAsync(embed: Slots.Help());
+                return;
+            }
+
+            if(Context.Channel.Name != "gambling")
+            {
+                await ReplyAsync($"Keep it in <#{Context.Guild.Channels.Where(c => c.Name == "gambling").First().Id}>, {Context.User.Mention}");
                 return;
             }
 
