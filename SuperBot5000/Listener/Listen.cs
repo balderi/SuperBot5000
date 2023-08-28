@@ -146,7 +146,7 @@ namespace SuperBot5000.Listener
                 message.Channel.SendMessageAsync($"Hi, {match.Groups[2]}, I'm {StaticResources.BotName ?? "a bot"}!");
                 return res;
             }
-            Console.WriteLine("No keywords found");
+            Console.WriteLine($"No keywords found - roll={roll}");
             return res;
         }
 
