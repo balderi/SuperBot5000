@@ -3,6 +3,7 @@ using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 
 namespace SuperBot5000.Listener
@@ -17,6 +18,7 @@ namespace SuperBot5000.Listener
 
             string[] lol = new string[] { "ROFL", "ROFLMAO", "OLOLOLOLOL!!!!11!!one!!!!eleventyone", "LOL", "BWAHAHA" };
             string[] bangalore = File.ReadAllLines("bangalore.txt");
+            string yourMom = "(var|er|skulle|har|havde|tog|set|ser|så|tager)";
             Random rnd = new();
             Console.WriteLine("Listening for keywords");
             string regex;
@@ -89,16 +91,16 @@ namespace SuperBot5000.Listener
                 return res;
             }
 
-            regex = @"(^|jeg|den|det|du|vi|I|dem)( var| er| skulle| har| havde| tog| set| ser| så| tager)";
+            regex = @"(^|jeg|den|det|du|vi|I|dem)[ ]{1}" + yourMom;
             res = Regex.IsMatch(message.Content.ToLower(), regex);
             if (res && rnd.Next(100) < 50)
             {
                 Console.WriteLine("Keywords found: din mor");
-                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, regex, "$0" + "din mor" + "$2")}");
+                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, yourMom, "din mor")}");
                 return res;
             }
 
-            regex = @"(^|Jeg|Den|Det|Du|Vi|I|Dem)( var| er| skulle| har| havde| tog| set| ser| så| tager)";
+            regex = @"(^|Jeg|Den|Det|Du|Vi|I|Dem)[ ]{1}" + yourMom;
             res = Regex.IsMatch(message.Content.ToLower(), regex, RegexOptions.Multiline);
             if (res && rnd.Next(100) < 50)
             {
