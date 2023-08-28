@@ -23,6 +23,7 @@ namespace SuperBot5000.Listener
             Console.WriteLine("Listening for keywords");
             string regex;
             bool res;
+            int roll = rnd.Next(100);
 
             regex = @"(\uD83D\uDE41|\uD83D\uDE26|\u2639|\uD83D\uDE22|\uD83D\uDE2D|\uD83D\uDE3F)";
             res = Regex.IsMatch(message.Content.ToLower(), regex);
@@ -84,64 +85,64 @@ namespace SuperBot5000.Listener
 
             regex = @"(^|)hvorfor";
             res = Regex.IsMatch(message.Content.ToLower(), regex);
-            if (res && rnd.Next(100) < 90)
+            if (res && roll < 90)
             {
-                Console.WriteLine("Keywords found: hvorfor");
+                Console.WriteLine($"Keywords found: hvorfor - roll={roll} (90)");
                 message.Channel.SendMessageAsync($"{message.Author.Mention} fordi du piller ved dig selv om natten...");
                 return res;
             }
 
             regex = @"(jeg|den|det|du|vi|I|dem)[ ]{1}" + yourMom;
             res = Regex.IsMatch(message.Content.ToLower(), regex);
-            if (res && rnd.Next(100) < 50)
+            if (res && roll < 50)
             {
-                Console.WriteLine("Keywords found: din mor");
+                Console.WriteLine($"Keywords found: din mor - roll={roll} (50)");
                 message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, "( jeg | den | det | du | vi | I | dem )", " din mor ")}");
                 return res;
             }
 
             regex = @"(Jeg|Den|Det|Du|Vi|I|Dem)[ ]{1}" + yourMom;
             res = Regex.IsMatch(message.Content.ToLower(), regex, RegexOptions.Multiline);
-            if (res && rnd.Next(100) < 50)
+            if (res && roll < 50)
             {
-                Console.WriteLine("Keywords found: Din mor");
+                Console.WriteLine($"Keywords found: Din mor - roll={roll} (50)");
                 message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, "(^|Jeg |Den |Det |Du |Vi |I |Dem )", "Din mor ")}");
                 return res;
             }
 
             regex = @"(^|\. )why";
             res = Regex.IsMatch(message.Content.ToLower(), regex);
-            if (res && rnd.Next(100) < 90)
+            if (res && roll < 90)
             {
-                Console.WriteLine("Keywords found: why");
+                Console.WriteLine($"Keywords found: why - roll={roll} (90)");
                 message.Channel.SendMessageAsync($"{message.Author.Mention} because you touch yourself at night...");
                 return res;
             }
 
             regex = @"(^|\. )[^ ]+('s| was| is| should| has| had| took)";
             res = Regex.IsMatch(message.Content.ToLower(), regex);
-            if (res && rnd.Next(100) < 50)
+            if (res && roll < 50)
             {
-                Console.WriteLine("Keywords found: Your mom");
+                Console.WriteLine($"Keywords found: Your mom - roll={roll} (50)");
                 message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, regex, "$1" + "Your mom" + "$2")}");
                 return res;
             }
 
             regex = @".*(lol|hah|haha|hahaha|lul|lel|lulz).*";
             res = Regex.IsMatch(message.Content.ToLower(), regex);
-            if (res && rnd.Next(100) < 80)
+            if (res && roll < 80)
             {
-                Console.WriteLine("Keywords found: lol");
+                Console.WriteLine($"Keywords found: lol - roll={roll} (80)");
                 message.Channel.SendMessageAsync($"{lol[rnd.Next(0, lol.Length)]}");
                 return res;
             }
 
             regex = @"^.*?(I'm) (.*?)([!?.]|$)";
             res = Regex.IsMatch(message.Content, regex);
-            if (res && rnd.Next(100) < 75)
+            if (res && roll < 75)
             {
                 var match = Regex.Match(message.Content, regex);
-                Console.WriteLine("Keywords found: I'm...");
+                Console.WriteLine($"Keywords found: I'm... - roll={roll} (75)");
                 message.Channel.SendMessageAsync($"Hi, {match.Groups[2]}, I'm {StaticResources.BotName ?? "a bot"}!");
                 return res;
             }
