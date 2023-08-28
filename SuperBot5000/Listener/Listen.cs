@@ -91,21 +91,21 @@ namespace SuperBot5000.Listener
                 return res;
             }
 
-            regex = @"(^|jeg|den|det|du|vi|I|dem)[ ]{1}" + yourMom;
+            regex = @"(jeg|den|det|du|vi|I|dem)[ ]{1}" + yourMom;
             res = Regex.IsMatch(message.Content.ToLower(), regex);
             if (res && rnd.Next(100) < 50)
             {
                 Console.WriteLine("Keywords found: din mor");
-                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, "(jeg |den |det |du |vi |I |dem )", "din mor ")}");
+                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, "( jeg | den | det | du | vi | I | dem )", " din mor ")}");
                 return res;
             }
 
-            regex = @"(^|Jeg|Den|Det|Du|Vi|I|Dem)[ ]{1}" + yourMom;
+            regex = @"(Jeg|Den|Det|Du|Vi|I|Dem)[ ]{1}" + yourMom;
             res = Regex.IsMatch(message.Content.ToLower(), regex, RegexOptions.Multiline);
             if (res && rnd.Next(100) < 50)
             {
                 Console.WriteLine("Keywords found: Din mor");
-                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, "(Jeg |Den |Det |Du |Vi |I |Dem )", "Din mor ")}");
+                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, "(^|Jeg |Den |Det |Du |Vi |I |Dem )", "Din mor ")}");
                 return res;
             }
 
