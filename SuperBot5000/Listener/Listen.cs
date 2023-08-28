@@ -96,7 +96,7 @@ namespace SuperBot5000.Listener
             if (res && rnd.Next(100) < 50)
             {
                 Console.WriteLine("Keywords found: din mor");
-                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, "(jeg|den|det|du|vi|I|dem)", "din mor")}");
+                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, "(jeg |den |det |du |vi |I |dem )", "din mor ")}");
                 return res;
             }
 
@@ -105,7 +105,7 @@ namespace SuperBot5000.Listener
             if (res && rnd.Next(100) < 50)
             {
                 Console.WriteLine("Keywords found: Din mor");
-                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, "(Jeg|Den|Det|Du|Vi|I|Dem)", "Din mor")}");
+                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, "(Jeg |Den |Det |Du |Vi |I |Dem )", "Din mor ")}");
                 return res;
             }
 
