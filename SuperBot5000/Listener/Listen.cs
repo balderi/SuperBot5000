@@ -94,7 +94,7 @@ namespace SuperBot5000.Listener
             if (res && rnd.Next(100) < 50)
             {
                 Console.WriteLine("Keywords found: din mor");
-                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, regex, "$1" + "din mor" + "$3")}");
+                message.Channel.SendMessageAsync($"{message.Author.Mention} {Regex.Replace(message.Content, regex, "$0" + "din mor" + "$2")}");
                 return res;
             }
 
