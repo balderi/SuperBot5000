@@ -107,7 +107,7 @@ namespace SuperBot5000
             }
 
             if(Listener.Listen.ForKeyWord(message))
-                StaticResources.LastListen = DateTime.Now;
+                StaticResources.LastListen = DateTime.UtcNow;
         }
     }
 }

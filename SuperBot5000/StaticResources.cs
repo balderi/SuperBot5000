@@ -21,7 +21,7 @@ namespace SuperBot5000
         public static ulong CurrentGuildId = 0;
         public static ulong CurrentVoiceChannelId = 0;
 
-        public static DateTime LastListen = DateTime.Now;
+        public static DateTime LastListen = DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(1));
 
         public static int ListenDelay = 30;
 

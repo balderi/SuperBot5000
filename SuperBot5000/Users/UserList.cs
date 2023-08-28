@@ -74,8 +74,7 @@ namespace SuperBot5000.Users
         {
             if(!File.Exists("users.json"))
             {
-                _userList.SaveList();
-                return LoadList();
+                return new List<User>();
             }
 
             StreamReader reader = new("users.json");
