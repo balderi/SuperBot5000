@@ -97,20 +97,20 @@ namespace SuperBot5000
 
         private void UpdateUsersTimer_Tick(object sender, EventArgs e)
         {
-            //_guildUsers = _client.GetGuild(252801284439015424).Users;
-            //foreach (SocketUser user in _guildUsers)
-            //{
-            //    UserList.GetUserList().GetUser(user);
-            //}
-            //_users = UserList.GetUserList().Users;
-            //_names = _users.Select(x => x.Name).ToList();
-            //var olUsers = _guildUsers.Where(x => x.Status != UserStatus.Offline).Where(x => _names.Contains(x.Mention)).Select(x => x.Mention).ToList();
-            //foreach (User u in _users.Where(x => olUsers.Contains(x.Name)))
-            //{
-            //    u.IncrementOLPoints();
-            //    u.TryRedeemOLPoints();
-            //}
-            //UserList.GetUserList().SaveList();
+            _guildUsers = _client.GetGuild(252801284439015424).Users;
+            foreach (SocketUser user in _guildUsers)
+            {
+                UserList.GetUserList().GetUser(user);
+            }
+            _users = UserList.GetUserList().Users;
+            _names = _users.Select(x => x.Name).ToList();
+            var olUsers = _guildUsers.Where(x => x.Status != UserStatus.Offline).Where(x => _names.Contains(x.Mention)).Select(x => x.Mention).ToList();
+            foreach (User u in _users.Where(x => olUsers.Contains(x.Name)))
+            {
+                u.IncrementOLPoints();
+                u.TryRedeemOLPoints();
+            }
+            UserList.GetUserList().SaveList();
         }
 
         private Task Log(LogMessage msg)
